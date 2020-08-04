@@ -1,0 +1,31 @@
+targetNamespace: {{namespace}}
+cleanNamespace: false
+bucket: {}
+parameters: {}
+{{#if packages}}
+packages:
+{{#each packages}}
+ - name: {{this.name}}
+   shared: false
+   clean: false
+   environment: {}
+   parameters: {}
+   annotations: {}
+   {{#if this.actions}}
+   actions:
+     {{#each this.actions}}
+     - name: {{name}}
+       clean: false
+       binary: false
+       main: ''
+       runtime: {{runtime}}
+       web: true
+       webSecure: false
+       parameters: {}
+       environment: {}
+       annotations: {}
+       limits: {}
+     {{/each}}
+    {{/if}}
+{{/each}}
+{{/if}}

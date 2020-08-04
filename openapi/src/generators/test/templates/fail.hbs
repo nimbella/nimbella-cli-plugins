@@ -1,0 +1,12 @@
+{{!-- { 
+   "listen":"test",
+   "script":{ 
+      "id":"f2a5d2ba-828c-4fc4-aaad-ee706a31108e",
+      "type":"text/javascript",
+      "exec":[ --}}
+pm.test("request should fail", function () {*#!
+    pm.expect(pm.response.code).to.be.oneOf([400, 401, 403, 404]);*#!
+});
+ {{!-- ]
+   }
+} --}}

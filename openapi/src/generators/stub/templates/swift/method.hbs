@@ -1,0 +1,12 @@
+
+/* {{{description}}} */
+
+{{#each responses}}
+// {{@key}} - {{this.description}}
+{{/each}}
+func main(args: [String:Any]) -> [String:Any] {
+     
+      return [ "body" : {{{body}}} ]
+    
+}
+

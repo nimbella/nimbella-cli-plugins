@@ -1,0 +1,16 @@
+<?php
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
+include '../../packages/{{packageName}}/{{methodName}}/index';
+
+final class Test_{{testName}} extends TestCase
+{
+    public function test_{{testName}}()
+    {
+        $this->assertEquals(
+            {{{body}}},
+            main({{param}})
+        );
+    }  
+}

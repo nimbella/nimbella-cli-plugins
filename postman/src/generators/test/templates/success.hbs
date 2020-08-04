@@ -1,0 +1,65 @@
+{{!-- { 
+"listen":"test",
+"script":{ 
+"id":"",
+"type":"text/javascript",
+"exec":[ --}}
+{{#if isPostRequest}}
+pm.test("Successful POST request", function () {*#!
+    pm.expect(pm.response.code).to.be.oneOf([201,202]);*#!
+});
+{{else}}
+pm.test("response is ok", function () {*#!
+    pm.response.to.have.status(200);*#!
+});
+{{/if}} 
+
+{{#if headers}}
+{{#each headers}}
+*#!pm.test("{{{this.key}}} header is present", function () {*#!
+    pm.response.to.have.header("{{{this.key}}}");*#!
+});
+{{/each}}  
+{{/if}}
+
+{{#if responseTime}}
+*#!pm.test("Response time is less than {{responseTime}}ms", function () {*#!
+    pm.expect(pm.response.responseTime).to.be.below({{responseTime}});*#!
+});
+{{/if}}
+*#!pm.test("response json data should not have errors", function () {*#!
+    pm.response.to.have.jsonBody();*#!
+    pm.response.to.not.have.jsonBody('error');*#!
+});
+
+{{#each propTypes}}
+*#!pm.test("response json should contain {{{this.key}}}", function () {*#!
+    pm.expect(pm.response.json()).to.have.property("{{{this.key}}}").and.be.an({{{this.value}}});*#!
+});"
+{{/each}}  
+
+{{#each propChildKeys}}
+*#!pm.test("response json should return {{{this.key}}} details", function () {*#!
+    pm.expect(pm.response.json()).to.have.property("{{{this.key}}}")*#!
+        .and.to.include.keys([{{#each this.value}} "{{this}}", {{/each}}]);*#!
+});
+{{/each}}
+
+{{#each envVars}}
+*#!pm.test('"{{{this}}}" variable should be present', function () {*#!
+    pm.expect(pm.variables.get(\"{{{this}}}\")).to.be.a('string');*#!
+});
+{{/each}}
+
+{{#if mandatoryProps}}
+*#!pm.test("Should have valid response", function () {*#!
+       const jsonData = pm.response.json();*#!
+{{!-- "   pm.expect(jsonData.data).to.include.all.keys({{#each mandatoryProps}} \"{{this}}\", {{/each}});", --}}
+   {{#each mandatoryProps}}
+       pm.expect(jsonData.{{this}}).to.be.ok;*#!
+   {{/each}}
+});
+{{/if}}
+{{!-- ]
+}
+} --}}

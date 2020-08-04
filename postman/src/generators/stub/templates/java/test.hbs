@@ -1,0 +1,14 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+class Main {
+    @Test
+    public void {{testName}}_Test() {
+        // assert statements
+        {{#if body}}
+        assertEquals({{{body}}}, Main.main({{param}}) , "Expected {{got}} to equal {{expected}}");
+        {{else}}
+        assertEquals("", Main.main({{param}}) , "Expected {{got}} to equal {{expected}}");
+        {{/if}}
+    }
+}

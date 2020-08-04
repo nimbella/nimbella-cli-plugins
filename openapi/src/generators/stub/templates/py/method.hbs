@@ -1,0 +1,12 @@
+""" 
+{{{description}}} 
+"""
+{{#each responses}}
+# {{@key}} - {{this.description}}
+{{/each}}
+def main(args):
+ {{#if body}}
+    return {"body": {{{body}}} }
+ {{else}}   
+    return {"body": ""}
+ {{/if}}

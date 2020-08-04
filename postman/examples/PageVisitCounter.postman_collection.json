@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "b9fac10c-2b2c-4af1-a2b2-de45a9e4de18",
+		"name": "PageVisitCounter",
+		"description": "API for a page visit counter.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Visits",
+			"item": [
+				{
+					"name": "Counter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "UserID=6f3bbf7f-66d4-4bdd-b6cc-1f470c5f649d"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/visits/counter",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"visits",
+								"counter"
+							]
+						},
+						"description": "A unique visitor increments the page visit counter."
+					},
+					"response": [
+						{
+							"name": "Unique page visit counter - Repeat Visitor",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Cookie",
+										"value": "UserID=6f3bbf7f-66d4-4bdd-b6cc-1f470c5f649d",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{namespace}}.nimbella.io/api/page-visit-counter/unique-visits",
+									"protocol": "https",
+									"host": [
+										"{{namespace}}",
+										"nimbella",
+										"io"
+									],
+									"path": [
+										"api",
+										"page-visit-counter",
+										"unique-visits"
+									]
+								}
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "4"
+						},
+						{
+							"name": "Unique page visit counter - New Visitor",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "https://{{namespace}}.nimbella.io/api/page-visit-counter/unique-visits",
+									"protocol": "https",
+									"host": [
+										"{{namespace}}",
+										"nimbella",
+										"io"
+									],
+									"path": [
+										"api",
+										"page-visit-counter",
+										"unique-visits"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "set-cookie",
+									"value": "UserID=6f3bbf7f-66d4-4bdd-b6cc-1f470c5f649d",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "3"
+						}
+					]
+				},
+				{
+					"name": "Info",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/visits/info",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"visits",
+								"info"
+							]
+						},
+						"description": "Find out when the page was last published."
+					},
+					"response": [
+						{
+							"name": "Page Info",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{namespace}}.nimbella.io/api/page-visit-counter/info",
+									"protocol": "https",
+									"host": [
+										"{{namespace}}",
+										"nimbella",
+										"io"
+									],
+									"path": [
+										"api",
+										"page-visit-counter",
+										"info"
+									]
+								}
+							},
+							"_postman_previewlanguage": "html",
+							"header": [],
+							"cookie": [],
+							"body": "1/1/2020"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "32eeda26-930a-4fd7-b877-265dfce899f3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bb7b56ea-d5c1-405f-a0c9-f24b8bb5d5b2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,101 @@
+{
+  "name": "@nimbella/plugin-apispecgen",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "description": "Nimbella - API Specifications Generator",
+  "author": {
+    "name": "nimbella",
+    "email": "info@nimbella.com",
+    "url": "https://nimbella.com/"
+  },
+  "bugs": "https://github.com/nimbella-corp/nimbella-cli-plugins/issues",
+  "dependencies": {
+    "@oclif/command": "^1.6.1",
+    "@oclif/config": "^1.15.1",
+    "chalk": "^4.0.0",
+    "handlebars": "^4.7.6",
+    "listr": "^0.14.3",
+    "shelljs": "^0.8.4",
+    "inquirer": "^6.0.0",
+    "mkdirp": "1.0.3",
+    "tslib": "^2.0.0",
+    "winston": "^3.2.1",
+    "patch-package": "^6.2.2",
+    "@airtasker/spot": "^1.1.4",
+    "openapi-to-postmanv2": "^1.1.19"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2",
+    "@types/eslint-scope": "^3.7.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/jest": "^25.2.3",
+    "@types/listr": "^0.14.2",
+    "@types/mkdirp": "^1.0.0",
+    "@types/node": "^14.0.4",
+    "@types/shelljs": "^0.8.8",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "cpx": "^1.5.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-oclif": "^3.1.0",
+    "eslint-config-oclif-typescript": "^0.2.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^4.2.3",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.3",
+    "source-map-loader": "^0.2.4",
+    "ts-jest": "^26.0.0",
+    "ts-loader": "^7.0.4",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "files": [
+    "lib",
+    "oclif.manifest.json",
+    "package.json",
+    ".npmrc",
+    "LICENCE"
+  ],
+  "homepage": "https://github.com//nimbella-corp/nimbella-cli-plugins",
+  "keywords": [
+    "oclif-plugin",
+    "postman-collection",
+    "openapi",
+    "api-specs-generator",
+    "nimbella",
+    "serverless",
+    "nimbella",
+    "convert",
+    "migrate",
+    "cli"
+  ],
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "apispecgen",
+    "devPlugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "https://github.com//nimbella-corp/nimbella-cli-plugins",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && cpx \"./src/generators/templates/**/*\" ./lib/generators/templates --clean",
+    "debug": "node --nolazy --inspect-brk=9229 src/index.ts",
+    "test": "jest --forceExit --coverage --verbose",
+    "start": "ts-node src/index.ts",
+    "build": "tsc && cpx \"./src/generators/templates/**/*\" ./lib/generators/templates --clean",
+    "prelint": "prettier --write \"**/*.{ts,md}\"",
+    "lint": "eslint . --ext .ts --config .eslintrc --fix --ignore-pattern node_modules/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  }
+}

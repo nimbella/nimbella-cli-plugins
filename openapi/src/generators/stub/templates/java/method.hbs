@@ -1,0 +1,18 @@
+import com.google.gson.JsonObject;
+
+/* {{{description}}} */
+
+{{#each responses}}
+// {{@key}} - {{this.description}}
+{{/each}}
+class Main {
+  public static JsonObject main(JsonObject args) {
+    JsonObject response = new JsonObject();
+    {{#if body}}
+    response.addProperty("body", {{{body}}});
+    {{else}}
+    response.addProperty("body", "");
+    {{/if}}
+    return response;
+  }
+}

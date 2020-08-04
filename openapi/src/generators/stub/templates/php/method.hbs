@@ -1,0 +1,29 @@
+<?php
+
+/* {{{description}}} */
+
+{{#each responses}}
+// {{@key}} - {{this.description}}
+{{/each}}
+function main() : array {
+    {{#if body}}
+        $json_body = json_decode(<<<JSON
+    {{{body}}}
+    JSON
+    ,true);
+    {{/if}}  
+    return [
+    {{#if headers}}
+        "headers" => [
+        {{#each headers}}
+        "{{{this.key}}}"=>"{{{this.value}}}",
+        {{/each}}
+        ], 
+    {{/if}}
+    {{#if body}}
+        "body" => $json_body
+    {{else}}
+        "body" => ''
+    {{/if}}   
+    ];
+}

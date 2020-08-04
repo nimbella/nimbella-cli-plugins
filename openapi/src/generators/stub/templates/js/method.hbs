@@ -1,0 +1,26 @@
+
+/* {{{description}}} */
+
+
+{{#each responses}}
+// {{@key}} - {{this.description}}
+{{/each}}
+function main(params) {
+    return {
+        statusCode: {{#is code 'default'}}200{{else}}{{code}}{{/is}},
+        {{#if headers}}
+        headers: {
+        {{#each headers}}
+        "{{{this.key}}}":"{{{this.value}}}",
+        {{/each}}
+        },
+        {{/if}}
+        {{#if body}}
+        body: {{{body}}},
+        {{else}}
+        body: '',
+        {{/if}}
+    };
+}
+
+exports.main = main;

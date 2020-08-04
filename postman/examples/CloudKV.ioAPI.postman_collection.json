@@ -1,0 +1,891 @@
+{
+	"info": {
+		"_postman_id": "a66b9dd2-7d8e-477a-ad40-0c6bd5a62c65",
+		"name": "CloudKV.ioAPI",
+		"description": "![CloudKV.io Logo](https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1574192384744x614657010508549000%2Flogo.png?w=384&h=384&auto=compress&fit=crop)\n\n\nCloudKV.io is a most simple and affordable Key/Value store aimed for developers. It's simplicity enables you to start your project fast without any external dependencies.\n\n# We're in BETA\n\nWe're currently running in open beta. GA is expected in the first quarter of 2020.\n\nDuring the meantime, you can use our service and expect it to be reliable. However, we don't offer SLA, which will be part of Pro and Business plans. \n\nDo you miss any feature to cover your use case? Feel free to get in touch with us!\n\n# Authorization\n\nFor management operations (create, modify, delete buckets) and key/value operations on protected buckets, you need your account key to authorize requests. Pass your account key as HTTP header `api-key`.\n\nBuckets can be created on three different modes (depending on plan):\n\n1. `public`: read, write and delete operations on this bucket do not need any authorization. If the hardly-guessable bucket ID is enough security, this option provides the most flexibility and speed for key/value operations \n2. `read-public`: only write and delete operations require authorization, read is public. Read is as fast as in `public` mode, write/delete are slightly slower\n3. `protected`: all operations, including GET requests, require authorization. Provides maximum security, however, operations are slower compared to `public` buckets\n\n# Plans & Limits\n\nWe want you to be able to try out CloudKV.io instantly and start your project without any costs. This is why we offer a generous free plan which might be just enough for your use case. Above that Buckets can be moved to a paid plan to unlock higher storage and premium features.\n\nPlans are attached to buckets. You can create as many buckets as you want, every bucket can be on its own plan.\n\n# Regions\n\nCloudKV.io will be available in multiple geographical zones to offer low latency operations. While in BETA, only the Global endpoint is available. \n\nAccounts, Buckets and Keys are always globally available, no matter which region you will use. However, if you use different regions for setting and getting keys, there might be a slight latency for keys to distribute through our network, keep that in mind.\n\nSo if latency is not your major concern, we recommend to use the Global endpoint which offers the highest availability.\n\n<table>\n\t<tr>\n\t\t<th>Region</th>\n\t\t<th>Endpoint</th>\n\t\t<th></th>\n\t</tr>\n\t<tr>\n\t\t<td>Global (Paris, Europe)</td>\n\t\t<td>api.cloudkv.io</td>\n\t\t<td>Available</td>\n\t</tr>\n\t<tr>\n\t\t<td>Ireland, Europe</td>\n\t\t<td>api.eu-west-1.cloudkv.io</td>\n\t\t<td>Coming soon</td>\n\t</tr>\t\n\t<tr>\n\t\t<td>Virgina, US</td>\n\t\t<td>api.us-east-1.cloudkv.io</td>\n\t\t<td>Coming soon</td>\n\t</tr>\n</table>\n\n## Plans\n\n<table>\n\t<tr>\n\t\t<th></th>\n\t\t<th>Free</th>\n\t\t<th>Pro</th>\n\t\t<th>Business</th>\n\t</tr>\n\t<tr>\n\t\t<th>No. of buckets</th>\n\t\t<td>10</td>\n\t\t<td>Unlimited</td>\n\t\t<td>Unlimited</td>\n\t</tr>\n\t<tr>\n\t\t<th>Keys per bucket</th>\n\t\t<td>10'000</td>\n\t\t<td>100 million</td>\n\t\t<td>100 million</td>\n\t</tr>\t\n\t<tr>\n\t\t<th>Max. Key Name size</th>\n\t\t<td>64 bytes</td>\n\t\t<td>64 bytes</td>\n\t\t<td>64 bytes</td>\n\t</tr>\t\n\t<tr>\n\t\t<th>Max. Key Value size</th>\n\t\t<td>4096 bytes</td>\n\t\t<td>4096 bytes</td>\n\t\t<td>16384 bytes</td>\n\t</tr>\t\n\t<tr>\n\t\t<th>Access modes</th>\n\t\t<td>public</td>\n\t\t<td>public, read-public</td>\n\t\t<td>public, read-public and protected</td>\n\t</tr>\t\t\n\t<tr>\n\t\t<th>Cost</th>\n\t\t<td>free</td>\n\t\t<td>$10/bucket/month</td>\n\t\t<td>$50/bucket/month</td>\n\t</tr>\t\t\n</table>\n\n# FAQ\n\n### Can I use CloudKV.io directly from my web app?\n\nYes, all our endpoints are CORS-enabled.\n\n### What are the rate limits?\n\nOur service is scalable in nature, which is why we do not impose any rate limits. However, for Free buckets, we expect that you respect our Fair Usage policy.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Ping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f2a5d2ba-828c-4fc4-aaad-ee706a31108e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint_url}}/ping",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"ping"
+							]
+						},
+						"description": "Use this endpoint to test the reachability of CloudKV.io API."
+					},
+					"response": [
+						{
+							"name": "Ping",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{endpoint_url}}/ping",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"ping"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "openresty"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Nov 2019 22:47:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "18"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "63cba631-b6b7-4f89-816e-a815fe6501d2"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"pong\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Buckets",
+			"item": [
+				{
+					"name": "Create Bucket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "60e6855d-be4a-47a7-a8e9-68629a89f4b8",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+									"});",
+									"",
+									"pm.environment.set(\"bucket\", pm.response.json().bucket_id);",
+									"pm.environment.set(\"account_key\", pm.response.json().account_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "api-key",
+								"value": "{{account_key}}",
+								"description": "Account Key",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "access",
+									"value": "public",
+									"description": "One of `public`, `public-read`, `protected`. Cannot be changed later!",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "Bucket for User Session Info",
+									"description": "Provide a comment so you know what this bucket is for",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{endpoint_url}}/buckets?",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"buckets"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Create a new bucket. Will respond with a Bucket ID, which must be used for all Key/Value operations.\n\nThe bucket ID you see in the example request is a public bucket which can be used for testing freely. However, keys may be deleted at any time.\n\nBuckets exist in three different access modes: public, public-read or protected:\n- `public`: read and write operations possible without api-key\n- `public-read`: for write operations an api-key must be supplied\n- `protected` for all operations an api-key must be supplied\n\nKey names can also look like paths: \"folder/jsons/file.json\"."
+					},
+					"response": [
+						{
+							"name": "Create Bucket",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "api-key",
+										"value": "{{account_key}}",
+										"description": "Account Key",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{endpoint_url}}/buckets?access=public",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"buckets"
+									],
+									"query": [
+										{
+											"key": "access",
+											"value": "public"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 20 Nov 2019 15:19:22 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "98"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account_id\": \"b98b258d-505c-4edd-8db6-162a59e2bf65\",\n    \"bucket_id\": \"a0h6hqok6kAT3d\",\n    \"mode\": \"public\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Buckets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "api-key",
+								"value": "{{account_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint_url}}/buckets",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"buckets"
+							]
+						},
+						"description": "List all bucket belonging to your account including an estimated key count, which is updated every few hours."
+					},
+					"response": [
+						{
+							"name": "List Buckets",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "api-key",
+										"value": "{{account_key}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{endpoint_url}}/buckets",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"buckets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 22 Nov 2019 08:41:16 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"buckets\": [\n        {\n            \"id\": \"aNaLkrOvqHR6\",\n            \"mode\": \"public\",\n            \"created_at\": \"2019-11-17T21:40:30.691263+01:00\",\n            \"comment\": null,\n            \"estimated_keys\": 14520010,\n            \"key_get_success\": 188787,\n            \"key_get_failed\": 0\n        },\n        {\n            \"id\": \"a1qEdq50Q7O3gB\",\n            \"mode\": \"public-read\",\n            \"created_at\": \"2019-11-20T16:06:16.432342+01:00\",\n            \"comment\": null,\n            \"estimated_keys\": 0,\n            \"key_get_success\": 0,\n            \"key_get_failed\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Bucket",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "api-key",
+								"value": "{{account_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint_url}}/buckets/{{bucket}}?confirm=0",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"buckets",
+								"{{bucket}}"
+							],
+							"query": [
+								{
+									"key": "confirm",
+									"value": "0",
+									"description": "Estimated number of keys as return by List Buckets"
+								}
+							]
+						},
+						"description": "Deletes a bucket. Operation is irreversible.\nTo prevent accidental deletion of buckets which contain keys, you must pass the number of estimated keys as `confirm` query parameter. Fetch this value via List Buckets first. If the values don't match, deletion of the bucket will not work."
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Bucket",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "api-key",
+								"value": "{{account_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "comment",
+									"value": "This is a comment to describe what's in my bucket",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{endpoint_url}}/buckets/{{bucket}}",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"buckets",
+								"{{bucket}}"
+							]
+						},
+						"description": "Set a comment on a bucket. Use this to remember what you store in this bucket."
+					},
+					"response": [
+						{
+							"name": "Modify Bucket",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "api-key",
+										"value": "{{account_key}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "comment",
+											"value": "This is a comment to describe what's in my bucket",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{endpoint_url}}/buckets/{{bucket}}",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"buckets",
+										"{{bucket}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 20 Nov 2019 22:31:12 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "Create and list buckets of your account.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8949dfc2-f6dd-4e5a-a4d9-00ee1af83ea5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c518862-a1d3-4341-9f06-1e05c9e305b2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Keys",
+			"item": [
+				{
+					"name": "Set Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34260e07-2bdd-40b7-af3a-e570fb8cc7d3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{{value}}gnaz"
+						},
+						"url": {
+							"raw": "{{endpoint_url}}/kv/{{bucket}}/test-k7?ttl=5s",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"kv",
+								"{{bucket}}",
+								"test-k7"
+							],
+							"query": [
+								{
+									"key": "ttl",
+									"value": "5s"
+								}
+							]
+						},
+						"description": "Create or update a key. The key value must be passed in the request body (raw).\nReturns \n- 200 OK if Key was sucessfully persisted.\n- 413 Request Entity Too Large of Key value was greater than the allowed maximum (currently 1 MiB). Consider compressing your value.\n\nAlternateively, you can use \"PUT\" instead of \"POST\"."
+					},
+					"response": [
+						{
+							"name": "Create Key by Body",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "this values was set by PUT body"
+								},
+								"url": {
+									"raw": "{{endpoint_url}}/kv/{{bucket}}/test-key",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"kv",
+										"{{bucket}}",
+										"test-key"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Server",
+									"value": "openresty"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Nov 2019 22:53:56 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "d75a8da0-7962-4733-83d9-d075805813fb"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61bd3931-dc55-4b5b-a9fc-2e618e517ae2",
+								"exec": [
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(pm.environment.get(\"value\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint_url}}/kv/{{bucket}}/test-k7?next=true",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"kv",
+								"{{bucket}}",
+								"test-k7"
+							],
+							"query": [
+								{
+									"key": "next",
+									"value": "true",
+									"description": "Will return the next key (ordered alphabetically) after this one in `X-Next-Key`header. Default: `false`"
+								}
+							]
+						},
+						"description": "Retrieve the value of a key. The value is returned in the response body.\n\nHeader `Last-Modified` always returns the timestamp of last key update.\nIf the key has a TTL, the expiration will be returned in the `Expires` header."
+					},
+					"response": [
+						{
+							"name": "Get Key",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{endpoint_url}}/kv/{{bucket}}/test-key",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"kv",
+										"{{bucket}}",
+										"test-key"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Server",
+									"value": "openresty"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Nov 2019 22:54:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 16 Nov 2020 22:54:43 GMT",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "this values was set by PUT body"
+						}
+					]
+				},
+				{
+					"name": "Get Key Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61bd3931-dc55-4b5b-a9fc-2e618e517ae2",
+								"exec": [
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(pm.environment.get(\"value\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint_url}}/kv/{{bucket}}/test-key?",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"kv",
+								"{{bucket}}",
+								"test-key"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Retrieve header of a key or check if key exists.\n\nHeader `Last-Modified` always returns the timestamp of last key update.\nIf the key has a TTL, the expiration will be returned in the `Expires` header."
+					},
+					"response": [
+						{
+							"name": "Get Key",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{endpoint_url}}/kv/{{bucket}}/test-key",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"kv",
+										"{{bucket}}",
+										"test-key"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Server",
+									"value": "openresty"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Nov 2019 22:54:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 16 Nov 2020 22:54:43 GMT",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "this values was set by PUT body"
+						}
+					]
+				},
+				{
+					"name": "Find Key With Prefix",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "61bd3931-dc55-4b5b-a9fc-2e618e517ae2",
+								"exec": [
+									"pm.test(\"Body is correct\", function () {",
+									"    pm.response.to.have.body(pm.environment.get(\"value\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint_url}}/kv/{{bucket}}?prefix=t",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"kv",
+								"{{bucket}}"
+							],
+							"query": [
+								{
+									"key": "prefix",
+									"value": "t"
+								}
+							]
+						},
+						"description": "Retrieve the name of first key matching `prefix`. The key name is returned in the response body.\nIf there is no key with this prefix, returns 404.\nCan be used to find the start of a range of keys to scan. Use together with \"Get Key With Next Key\" to range over a sequence of keys."
+					},
+					"response": [
+						{
+							"name": "Get Key",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{endpoint_url}}/kv/{{bucket}}/test-key",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"kv",
+										"{{bucket}}",
+										"test-key"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Server",
+									"value": "openresty"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Nov 2019 22:54:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 16 Nov 2020 22:54:43 GMT",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "this values was set by PUT body"
+						}
+					]
+				},
+				{
+					"name": "Delete Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a70de46-ecac-4865-8a39-c0fce88bc537",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint_url}}/kv/{{bucket}}/{{key}}",
+							"host": [
+								"{{endpoint_url}}"
+							],
+							"path": [
+								"kv",
+								"{{bucket}}",
+								"{{key}}"
+							]
+						},
+						"description": "Deletes a key with it's value. This operation is final, there is no way to undo.\nSubsequent deletes on the same key always return 200 OK."
+					},
+					"response": [
+						{
+							"name": "Delete Key",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{endpoint_url}}/kv/{{bucket}}/{{key}}",
+									"host": [
+										"{{endpoint_url}}"
+									],
+									"path": [
+										"kv",
+										"{{bucket}}",
+										"{{key}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Server",
+									"value": "openresty"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 16 Nov 2019 22:56:12 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Request-ID",
+									"value": "7cfb6406-ccd3-44d8-b6f2-a25dfcec18eb"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "Operations on Keys: create, read, update and delete.",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8ab76ae8-8f93-4ca4-9bf7-3283ee3676fe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bc481bce-ec3e-4a96-8568-4b60541f9479",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

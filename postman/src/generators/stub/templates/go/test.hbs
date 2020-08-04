@@ -1,0 +1,46 @@
+package {{namespace}}
+
+import (
+	"testing"
+    "../../packages/{{packageName}}/{{methodName}}/index"
+)
+        
+func TestMain(t *testing.T) {
+    response := main()
+    if response != {{{body}}} {
+       t.Errorf("Actual response body doesn't match expected response")
+    }
+
+    expected := {{{body}}}
+    if response.Body.String() != expected {
+        t.Errorf("handler returned unexpected body: got %v want %v",
+            response.Body.String(), expected)
+    }
+}
+
+{{#if isPostRequest}}
+func TestPostRequest(t *testing.T) {
+    response := main()
+    if response.code != 201 || response.code != 202  {
+       t.Errorf("POST request was not successful")
+    }
+}
+{{else}}
+func TestOkRequest(t *testing.T) {
+    response := main()
+    if response.statusCode != 200  {
+       t.Errorf("Request was not successful")
+    }
+}
+{{/if}}
+
+{{#if headers}}
+func TestResponseHeaders(t *testing.T) {
+    response := main()
+    headers := []string{ 
+        {{#each headers}}
+            {{{this.key}}},
+        {{/each}} 
+    }
+} 
+{{/if}}

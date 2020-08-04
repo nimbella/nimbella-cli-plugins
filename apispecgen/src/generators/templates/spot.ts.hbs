@@ -1,0 +1,24 @@
+import { api, body, endpoint, response } from "@airtasker/spot";
+
+@api({ name: "{{name}}" })
+class {{name}} {}
+
+{{#if packages}}
+{{#each packages as | package |}}  
+{{#if this.actions}}
+{{#each this.actions}}
+
+@endpoint({
+  method: "GET",
+  path: "/{{package.name}}/{{this.name}}"
+})
+class {{package.escapedName}}_{{this.escapedName}} {
+  @response({ status: 200 })
+  successResponse(@body body:{}) {}
+}
+{{/each}}
+{{/if}}
+{{/each}}
+{{/if}}
+
+
