@@ -8,7 +8,7 @@ This is an extension to the [Nimbella Command Line Tool](https://github.com/nimb
 
 ```
 nim -v
-nimbella-cli/1.5.0 linux-x64 node-v14.4.0
+nimbella-cli/1.6.0 linux-x64 node-v14.4.0
 
 ```
 
@@ -20,12 +20,6 @@ Use this command to install the latest version of Postman plugin
 nim plugins add postman
 ```
 
-or to install a specific version
-
-```
-nim plugins add postman-1.0.0
-```
-
 ## Verify
 
 Check the list of currently installed plugins:
@@ -35,18 +29,29 @@ nim plugins
 postman-1.0.0
 ```
 
+## Uninstall
+
+Use this command to uninstall this plugin
+
+```
+nim plugin remove postman
+```
 ---
 
 > Now you are one command away from generating a full blown Serverless Nimbella Project and two commands away from taking your APIs out in the world.
 
 Making the most out of your Postman Collection, this command traverses through each endpoint, generates mocks, unit tests and postman tests, Of course merging well with what you have in the collection already!
 
-run below command and check your output directory for the resulting Nimbella Project.
+Use below command and check your output directory for the resulting Nimbella Project.
 
 ```
 nim project create -s postman -i CloudKV.ioAPI  -k <postman-key> -l php -c
 ```
+Alternatively, for a guided prompt, you can also do a 
 
+```
+nim project create -s postman
+```
 Here `nim project create` project does exactly what it promises to be doing.
 
 The `-i` stands for identity, it could be Collection Id, Name or even a file on your disk, provided it's a valid postman collection. You can even use your old collections which you haven't touched for ages. This command converts your version 1.0 collection into version 2.0 and also saves it to your disk.
@@ -103,7 +108,7 @@ nim project deploy .
 
 Congratulations! your APIs are live now.
 
-verify the list of actions
+Verify the list of actions
 
 ```
 nim action list
@@ -130,7 +135,7 @@ nim plugins uninstall postman
 
 ## Update
 
-Plugins will autoupdate alongside the CLI, but to trigger an update directly run:
+Plugins will auto update alongside the CLI, but to trigger an update directly run:
 
 ```
 nim update

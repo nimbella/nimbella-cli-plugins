@@ -8,7 +8,7 @@ This is an extension to the [Nimbella Command Line Tool](https://github.com/nimb
 
 ```
 nim -v
-nimbella-cli/1.5.0 linux-x64 node-v14.4.0
+nimbella-cli/1.6.0 linux-x64 node-v14.4.0
 
 ```
 
@@ -18,12 +18,6 @@ Use this command to install the latest version of OpenAPI plugin
 
 ```
 nim plugins add openapi
-```
-
-or to install a specific version
-
-```
-nim plugins add openapi-1.0.0
 ```
 
 ## Verify
@@ -41,10 +35,15 @@ openapi-1.0.0
 
 Making the most out of your OpenAPI Collection, this command traverses through each endpoint, generates mocks, and unit tests.
 
-run below command and check your output directory for the resulting Nimbella Project.
+Use below command and check your output directory for the resulting Nimbella Project.
 
 ```
-nim project create -s openapi -o bhageena -i CloudKV.ioAPI  -k <OpenAPI-key> -l php -c
+nim project create -s openapi -o bhageena -i CloudKV.ioAPI  -k <swaggerhub-key> -l php -c
+```
+Alternatively, for a guided prompt, you can also do a 
+
+```
+nim project create -s openapi
 ```
 
 Here `nim project create` project does exactly what it promises to be doing.
@@ -104,7 +103,7 @@ nim project deploy .
 
 Congratulations! your APIs are live now.
 
-verify the list of actions
+Verify the list of actions
 
 ```
 nim action list
@@ -131,10 +130,18 @@ nim plugins uninstall openapi
 
 ## Update
 
-Plugins will autoupdate alongside the CLI, but to trigger an update directly run:
+Plugins will auto update alongside the CLI, but to trigger an update directly run:
 
 ```
 nim update
+```
+
+## Uninstall
+
+Use this command to uninstall this plugin
+
+```
+nim plugin remove openapi
 ```
 
 ---
