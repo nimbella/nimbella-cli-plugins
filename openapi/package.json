@@ -10,8 +10,9 @@
   },
   "bugs": "https://github.com/nimbella-corp/nimbella-cli-plugins/issues",
   "dependencies": {
-    "@oclif/command": "^1",
-    "@oclif/config": "^1",
+    "@oclif/command": "^1.6.1",
+    "@oclif/config": "^1.15.1",
+    "@oclif/plugin-help": "^3.2.0",
     "@apidevtools/swagger-parser": "^9.0.1",
     "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
     "axios": "^0.19.2",
@@ -93,7 +94,8 @@
     "bin": "openapi",
     "devPlugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "scope": "nimbella"
   },
   "repository": "https://github.com//nimbella-corp/nimbella-cli-plugins",
   "scripts": {

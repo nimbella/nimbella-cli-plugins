@@ -12,6 +12,7 @@
   "dependencies": {
     "@oclif/command": "^1.6.1",
     "@oclif/config": "^1.15.1",
+    "@oclif/plugin-help": "^3.2.0",
     "acorn": "^7.2.0",
     "axios": "^0.19.2",
     "chalk": "^4.0.0",
@@ -89,7 +90,8 @@
     "bin": "postman",
     "devPlugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "scope": "nimbella"
   },
   "repository": "https://github.com//nimbella-corp/nimbella-cli-plugins",
   "scripts": {
