@@ -2,13 +2,13 @@
   "name": "@nimbella/plugin-openapi",
   "version": "0.0.0",
   "license": "Apache-2.0",
-  "description": "OpenApi Document to Nimbella Project : Take your APIs seamlessly into Serverless world with this easy CLI tool",
+  "description": "OpenApi Document to Nimbella Project : Take your APIs seamlessly into Serverless world with this [Nimbella CLI](https://nimbella.io/downloads/nim/nim.html) plugin",
   "author": {
     "name": "nimbella",
     "email": "info@nimbella.com",
     "url": "https://nimbella.com/"
   },
-  "bugs": "https://github.com/nimbella-corp/nimbella-cli-plugins/issues",
+  "bugs": "https://github.com/nimbella/nimbella-cli-plugins/issues",
   "dependencies": {
     "@oclif/command": "^1.6.1",
     "@oclif/config": "^1.15.1",
@@ -78,7 +78,7 @@
     "package.json",
     "LICENSE"
   ],
-  "homepage": "https://github.com//nimbella-corp/nimbella-cli-plugins",
+  "homepage": "https://github.com//nimbella/nimbella-cli-plugins",
   "keywords": [
     "oclif-plugin",
     "openapi",
@@ -97,7 +97,7 @@
     ],
     "scope": "nimbella"
   },
-  "repository": "https://github.com//nimbella-corp/nimbella-cli-plugins",
+  "repository": "https://github.com//nimbella/nimbella-cli-plugins",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
