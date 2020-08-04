@@ -88,7 +88,7 @@ export function deleteFile(fileMeta: FileMetaLogOption): void {
       console.log(
         `${blue('deleted :')}  ${fileMeta.location}/${fileMeta.name}.${
           fileMeta.ext
-        }`
+        }`,
       )
   } catch (error) {
     logger.error(error)

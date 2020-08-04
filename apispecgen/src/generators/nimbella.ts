@@ -11,10 +11,10 @@
  * governing permissions and limitations under the License.
  */
 
-import { join } from 'path'
-import { readFileSync } from 'fs'
+import {join} from 'path'
+import {readFileSync} from 'fs'
 import Handlebars = require('handlebars');
-import { writeFile } from '../writer'
+import {writeFile} from '../writer'
 
 const templateFile = readFileSync(
   join(__dirname, 'templates', 'project.yml.hbs'),
@@ -25,5 +25,13 @@ export async function writeNimSpec(meta: any): Promise<void> {
   const spec = template({
     ...meta,
   })
-  writeFile({ location: process.cwd(), name: `project.${meta.spec}`, ext: 'yml', verbose: true }, spec)
+  writeFile(
+    {
+      location: process.cwd(),
+      name: `project.${meta.spec}`,
+      ext: 'yml',
+      verbose: true,
+    },
+    spec,
+  )
 }

@@ -12,12 +12,12 @@
  */
 
 import Converter = require('openapi-to-postmanv2');
-import { writeFile } from '../writer'
-import { getOpenApiSpec } from './openapi'
+import {writeFile} from '../writer'
+import {getOpenApiSpec} from './openapi'
 
 export async function writePostmanSpec(meta: any): Promise<void> {
   Converter.convert(
-    { type: 'json', data: await getOpenApiSpec(meta) },
+    {type: 'json', data: await getOpenApiSpec(meta)},
     {},
     (
       err: any,
@@ -29,7 +29,7 @@ export async function writePostmanSpec(meta: any): Promise<void> {
             location: meta.cwd,
             name: `${meta.name}.${meta.spec}`,
             ext: 'json',
-            verbose: true
+            verbose: true,
           },
           JSON.stringify(result.output[0].data, null, 2),
         )
