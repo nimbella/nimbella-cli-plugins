@@ -2,14 +2,25 @@
 
 This package is a plugin to extend the functionality of the Nimbella command interface, plugins allow developers to extend the functionality by adding commands or features. 
 
-If you write RESTful APIs, [Postman](https://www.postman.com/) is an indispensable tool. With over 4 million users, it has become a tool of choice for developing, testing, collaborating, documenting and maintaining the RESTful APIs. 
+If you write RESTful APIs, [Postman](https://www.postman.com/) is an indispensable tool. With millions of users, it has become default tool of choice for developing, testing, collaborating, documenting and maintaining the RESTful APIs. 
 
 If you create/maintain Postman collections, with this plugin, getting a taste of serverless was never easier. Nimbella Postman Plugin is aimed for Postman users like you, it enables you to take your APIs into serverless world seamlessly with automated code stub generation and one command deployment. Along with code stub, generated project structure also contains Unit Tests, Postman Tests (updated in the collection document), Client Code and Nimbella Project Configuration File.
 
 The collection document can also be synced to Postman Cloud by specifying a flag `on` at the time of plugin command invocation and thus the updated collection becomes ready for other collaborators instantly. 
 
-This Nimbella CLI Plugin also works in off-line mode. i.e. if you have a copy of collection document on your disk, it can generate the project structure using the document. You can even use old collections. This plugin converts version `1.0` collection into version `2.0` and also saves it in the generated project directory.
+This Nimbella CLI Plugin also works in off-line mode, i.e. if you have a copy of collection document on your disk, it can generate the project structure using the document. You can even use old collections. This plugin converts version `1.0` collection into version `2.0` and also saves it in the generated project directory.
 
+## Salient Features
+Let's recount the major tasks this plugin helps to achieve
+- Generate Nimbella Project Structure with stubs, unit tests and client code
+- Generate language specific project configuration, package/dependency management and .gitignore files
+- Generate Readme using collection description
+- Update dummy API endpoints or non existent urls in collection document with Nimbella namespace urls that you get post deployment
+- Augment collection document with new Postman Tests 
+- Sync the updated collection to Postman Cloud
+- Auto conversion of version `1.0` collection into version `2.0` 
+- Post deployment, example responses in collection can be fetched from deployed urls
+- Synced collection document gets updated in the Postman App 
 
 ## Prerequisites
 
@@ -206,7 +217,7 @@ graph LR
     Extend --> Test --> Deploy --> Test --> Extend
 ```
 
-> While you do your iterations with ease of serverless. This plugin also keeps your collection and the serverless project in sync. Be it the collection in Postman Cloud, Postman App or Collection in your file system. Things are in perfect harmony with your work in project to collection document or vice versa.
+> While you do your iterations with ease of serverless. This plugin also keeps your collection and the serverless project in sync. Be it the collection in Postman Cloud, Postman App or Collection in your file system. Your collection document and project structure are in perfect harmony.
 
 ## Uninstall
 
