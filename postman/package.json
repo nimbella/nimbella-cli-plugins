@@ -24,13 +24,15 @@
     "listr": "^0.14.3",
     "mkdirp": "1.0.4",
     "ncp": "^2.0.0",
+    "nimbella-deployer": "https://preview-apigcp.nimbella.io/nimbella-deployer.tgz",
     "postman-code-generators": "^0.2.4",
-    "postman-collection": "^3.6.1",
+    "postman-collection": "3.6.1",
     "postman-collection-transformer": "^3.3.1",
     "recast": "^0.19.1",
     "retry-axios": "^2.2.0",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
+    "treeify": "^1.1.0",
     "tslib": "^2.0.0",
     "winston": "^3.2.1"
   },
@@ -43,12 +45,14 @@
     "@types/mkdirp": "^1.0.0",
     "@types/ncp": "^2.0.4",
     "@types/node": "^14.0.4",
-    "@types/postman-collection": "^3.5.3",
+    "@types/postman-collection": "3.5.3",
     "@types/rimraf": "^3.0.0",
     "@types/shelljs": "^0.8.8",
+    "@types/treeify": "^1.0.0",
     "@types/yargs": "^15.0.5",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
+    "@types/swagger-schema-official": "2.0.15",
     "cpx": "^1.5.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -56,8 +60,8 @@
     "eslint-config-oclif-typescript": "^0.2.0",
     "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.3",
-    "prettier": "^2.0.3",
     "jest": "^26.0.1",
+    "prettier": "^2.0.3",
     "source-map-loader": "^0.2.4",
     "ts-jest": "^26.0.0",
     "ts-loader": "^7.0.4",
@@ -88,10 +92,16 @@
   "oclif": {
     "commands": "./lib/commands",
     "bin": "postman",
+    "commandSeparator": " ",
     "devPlugins": [
       "@oclif/plugin-help"
     ],
-    "scope": "nimbella"
+    "scope": "nimbella",
+    "hooks": {
+      "init": [
+        "./lib/hooks/init"
+      ]
+    }
   },
   "repository": "https://github.com//nimbella/nimbella-cli-plugins",
   "scripts": {
