@@ -14,7 +14,7 @@
 import {readFileSync, writeFileSync, existsSync, appendFileSync} from 'fs'
 import {convert} from 'postman-collection-transformer'
 import {extname, basename, join, dirname} from 'path'
-import {Collection, CollectionDefinition} from 'postman-collection'
+import {Collection} from 'postman-collection'
 import {blue, green} from 'chalk'
 import {sync} from 'mkdirp'
 import logger from './logger'
@@ -29,7 +29,7 @@ export function upgrade(fileLocation: string, version = '2.1.0'): Collection {
   return convert(
     JSON.parse(readFileSync(fileLocation).toString()),
     transformOptions,
-    (error: string, result: CollectionDefinition) => {
+    (error: string, result: any) => {
       if (error) {
         logger.error(error)
         console.log(`Couldn't convert collection: ${fileLocation}`)

@@ -21,7 +21,7 @@ import {
   isJson,
   TestStubParams,
 } from '../../utils'
-import {DescriptionDefinition, HeaderList} from 'postman-collection'
+import {HeaderList} from 'postman-collection'
 const TEST_STUB_RES_BODY_MAX_LEN = 300
 export default class PyGenerator extends BaseGenerator {
   constructor() {
@@ -43,8 +43,7 @@ export default class PyGenerator extends BaseGenerator {
     const cookies = (response.cookies || '').members
     const {status} = response
     const body = escapeSpecialChars(JSON.stringify(response.body || ''))
-    const description = ((item.request.description ||
-      '') as DescriptionDefinition).content
+    const description = (item.request.description || '').content
     const params: MethodStubParams = {
       path,
       headers,
