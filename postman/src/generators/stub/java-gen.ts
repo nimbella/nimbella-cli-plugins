@@ -17,7 +17,6 @@ import {
   escapeSpecialChars,
   MethodStubParams,
 } from '../../utils'
-import {DescriptionDefinition} from 'postman-collection'
 
 export default class JavaGenerator extends BaseGenerator {
   constructor() {
@@ -39,8 +38,7 @@ export default class JavaGenerator extends BaseGenerator {
     const cookies = (response.cookies || '').members
     const {status} = response
     const body = escapeSpecialChars(JSON.stringify(response.body || ''))
-    const description = ((item.request.description ||
-      '') as DescriptionDefinition).content
+    const description = (item.request.description || '').content
     const params: MethodStubParams = {
       path,
       headers,

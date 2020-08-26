@@ -13,11 +13,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { existsSync } from 'fs'
-import { join } from 'path'
-import { blue, red, green } from 'chalk'
-import { PropertyDefinition, ItemGroup } from 'postman-collection'
-import { read, isValid, CollectionInfo } from './reader'
+import {existsSync} from 'fs'
+import {join} from 'path'
+import {blue, red, green} from 'chalk'
+import {ItemGroup} from 'postman-collection'
+import {read, isValid, CollectionInfo} from './reader'
 import {
   getInstance,
   getMethodStub,
@@ -33,7 +33,7 @@ import {
   getMethodValidations,
   getGlobalValidations,
 } from './generators/test/test-gen'
-import { sanitizeFileName, isGuid, isPublicApi } from './utils'
+import {sanitizeFileName, isGuid, isPublicApi} from './utils'
 import PostmanFetcher from './fetcher'
 import PostmanSyncer from './syncer'
 import GeneratorInfo from './generators/stub/gen-info'
@@ -217,7 +217,7 @@ export default class Generate {
       if (testArray.length > 0) {
         testArray[0].script.exec = testArray[0].script.exec.concat(testSuite)
       } else {
-        testArray = [{ script: { exec: [] } }]
+        testArray = [{script: {exec: []}}]
         testArray[0].script.exec = testSuite
       }
     }
@@ -235,13 +235,13 @@ export default class Generate {
         item.request.url.variables.members.length > 0
       ) {
         modifiedUrl += `/${item.request.url.variables.members
-          .map((q: any) => `:${q.key}`)
-          .join('/')}`
+        .map((q: any) => `:${q.key}`)
+        .join('/')}`
       }
       if (item.request.url.query && item.request.url.query.members.length > 0) {
         modifiedUrl += `?${item.request.url.query.members
-          .map((q: any) => `${q.key}=${q.value}`)
-          .join('&')}`
+        .map((q: any) => `${q.key}=${q.value}`)
+        .join('&')}`
       }
       item.request.url = new URL(modifiedUrl)
       for (const res of item.responses.members) {
@@ -257,9 +257,7 @@ export default class Generate {
         return
       }
 
-      const actionPath = sanitizeFileName(
-        (item.parent() as PropertyDefinition).name as string,
-      )
+      const actionPath = sanitizeFileName(item.parent().name as string)
       const itemName = sanitizeFileName(item.name)
       // write root level actions in project.yml
       if (actionPath === collectionName) {
@@ -276,7 +274,7 @@ export default class Generate {
             location: join(workDir, 'packages', actionPath, itemName),
             name: 'index',
             ext: langExt,
-            verbose: true
+            verbose: true,
           },
           methodStub,
           this.update,
@@ -293,13 +291,14 @@ export default class Generate {
         {
           location: join(workDir, 'test', actionPath),
           name: `${itemName}.test`,
-          ext: langExt, verbose: true
+          ext: langExt,
+          verbose: true,
         },
         testStub,
         this.update,
       )
 
-      const { request } = item
+      const {request} = item
       const [response]: any = item.responses.members
       // test generation
       await validationScripts(item, actionPath, itemName)
@@ -313,7 +312,7 @@ export default class Generate {
               location: join(workDir, 'client', actionPath),
               name: itemName,
               ext: langExt,
-              verbose: true
+              verbose: true,
             },
             clientStub,
             this.update,
@@ -323,7 +322,7 @@ export default class Generate {
         }
       }
     }
-    const itemsOpsArray = pm.collection.items.map(itemOps)
+    const itemsOpsArray = pm.collection.items.map(itemOps, undefined)
     return itemGroupOps(itemsOpsArray)
   };
 
@@ -336,12 +335,9 @@ export default class Generate {
       generator: genInstance.generator,
     })
     let actionCount = 0
-    pm.collection.forEachItemGroup(async itemGroup => {
+    pm.collection.forEachItemGroup(async (itemGroup: any) => {
       // iteratively update project.yml
-      const members = {}.propertyIsEnumerable.call(
-        itemGroup.items,
-        'members',
-      ) as any // ; (itemGroup.items as any).members
+      const members = itemGroup.items.members
       if (
         members.length > 0 &&
         Object.prototype.hasOwnProperty.call(members[0], 'request')
@@ -351,7 +347,7 @@ export default class Generate {
           workDir,
           `\n  - name: ${groupName}\n    actions:\n`,
         )
-        itemGroup.forEachItem(async item => {
+        itemGroup.forEachItem(async (item: any) => {
           actionCount += 1
           if (!isPublicApi(item.request.url.toString()))
             this.projectGenerator.updateProjectYML(

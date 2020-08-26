@@ -12,7 +12,6 @@
  */
 
 import {readFileSync} from 'fs'
-import {Collection, DescriptionDefinition} from 'postman-collection'
 import {join} from 'path'
 import {compile} from 'handlebars'
 import {sanitizeFileName, SupportingItem} from '../../utils'
@@ -31,10 +30,9 @@ export default class JsGenerator extends BaseGenerator {
 
   private tmplPackage = compile(this.packageStub.toString());
 
-  getSupportingItems(collection: Collection): Array<SupportingItem> {
+  getSupportingItems(collection: any): Array<SupportingItem> {
     const name = sanitizeFileName(collection.name || '')
-    const desc = ((collection.description || '') as DescriptionDefinition)
-    .content
+    const desc = (collection.description || '').content
     const re = new RegExp(/^(.*?)[.?!]\s/)
     const shortDesc = re.exec(desc)
     const params = {

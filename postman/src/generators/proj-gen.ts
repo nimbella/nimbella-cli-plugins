@@ -17,7 +17,7 @@ import * as rimraf from 'rimraf'
 import * as ncp from 'ncp'
 import {existsSync, writeFileSync, appendFileSync} from 'fs'
 import {join} from 'path'
-import {Collection, DescriptionDefinition} from 'postman-collection'
+import {Collection} from 'postman-collection'
 import {blue, greenBright} from 'chalk'
 import getReadMe from './stub/common-gen'
 import BaseGenerator from './stub/base-gen'
@@ -158,9 +158,7 @@ export default class ProjectGenerator {
     })
     writeReadMe(
       workDir,
-      getReadMe(
-        ((opts.collection.description || '') as DescriptionDefinition).content,
-      ),
+      getReadMe(((opts.collection as any).description || '').content),
     )
     writeEnvFile(workDir, getEnvVars(opts.collection, undefined))
     return workDir

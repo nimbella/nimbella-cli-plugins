@@ -12,11 +12,7 @@
  */
 
 import {readFileSync} from 'fs'
-import {
-  DescriptionDefinition,
-  Collection,
-  HeaderList,
-} from 'postman-collection'
+import {Collection, HeaderList} from 'postman-collection'
 import {join} from 'path'
 import {compile} from 'handlebars'
 import {
@@ -97,8 +93,7 @@ export default class BaseGenerator {
     const cookies = (response.cookies || '').members
     const {status} = response
     const body = response.body || ''
-    const description = ((item.request.description ||
-      '') as DescriptionDefinition).content
+    const description = (item.request.description || '').content
     const params: MethodStubParams = {
       path,
       headers,
