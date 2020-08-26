@@ -36,7 +36,7 @@ export default class Invoker {
   }
 
   generateSpec = async (): Promise<void> => {
-    const namespace = this.util.getCurrentNamespace()
+    const namespace = await this.util.getCurrentNamespace()
     const cwd = process.cwd()
     const meta = {
       cwd,

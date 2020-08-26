@@ -14,10 +14,9 @@
 import {which, exec} from 'shelljs'
 import {blue} from 'chalk'
 import logger from './logger'
+import { getCurrentNamespace, authPersister } from 'nimbella-deployer'
 
 export class Utils {
-  currentNamespace: string | undefined;
-
   isAvailable(): boolean {
     if (which('nim')) {
       return true
@@ -42,22 +41,8 @@ export class Utils {
     }
   }
 
-  getCurrentNamespace(): string {
-    if (!this.currentNamespace) {
-      const cmd = 'nim auth current'
-      try {
-        const execution = exec(cmd, {silent: true})
-        if (execution.code !== 0) {
-          logger.error(execution.stderr)
-        }
-        this.currentNamespace = execution.stdout
-      } catch (error) {
-        logger.error(error)
-        console.log(`Couldn't execute: ${cmd}`)
-        return error
-      }
-    }
-    return this.currentNamespace.replace('\n', '')
+  async getCurrentNamespace(): Promise<string> {
+    return getCurrentNamespace(authPersister)
   }
 
   sanitizeName(name: string, joiner: string) {

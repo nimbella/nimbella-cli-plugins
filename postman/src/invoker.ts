@@ -223,7 +223,7 @@ export default class Generate {
     }
 
     const getURL = async (actionPath: string, isWebAction = false) => {
-      const namespace = this.projectGenerator.getCurrentNamespace()
+      const namespace = await this.projectGenerator.getCurrentNamespace()
       if (isWebAction)
         return `https://apigcp.nimbella.io/api/v1/web/${namespace}/${actionPath}`
       return `https://${namespace}-apigcp.nimbella.io/api/${actionPath}`
