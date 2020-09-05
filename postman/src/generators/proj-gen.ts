@@ -19,6 +19,7 @@ import {existsSync, writeFileSync, appendFileSync} from 'fs'
 import {join} from 'path'
 import {Collection} from 'postman-collection'
 import {blue, greenBright} from 'chalk'
+import {getCurrentNamespace, authPersister} from 'nimbella-deployer'
 import getReadMe from './stub/common-gen'
 import BaseGenerator from './stub/base-gen'
 import logger from '../logger'
@@ -51,22 +52,8 @@ export default class ProjectGenerator {
     }
   }
 
-  getCurrentNamespace(): string {
-    if (!this.currentNamespace) {
-      const cmd = 'nim auth current'
-      try {
-        const execution = exec(cmd, {silent: true})
-        if (execution.code !== 0) {
-          logger.error(execution.stderr)
-        }
-        this.currentNamespace = execution.stdout
-      } catch (error) {
-        logger.error(error)
-        console.log(`Couldn't execute: ${cmd}`)
-        return error
-      }
-    }
-    return this.currentNamespace
+  async getCurrentNamespace(): Promise<string> {
+    return getCurrentNamespace(authPersister)
   }
 
   async getActionUrl(name: string): Promise<string> {
