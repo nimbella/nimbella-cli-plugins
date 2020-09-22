@@ -71,6 +71,7 @@ It will present a guided prompt, with below steps
 ```
 
 Enter the key as given e.g. `PMAK-5e2a993188ce8e003888f36b-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`. You can easily generate one by visiting the [Postman Integrations Dashboard](https://go.postman.co/integrations/services/pm_pro_api)
+Manual key entering can be avoided using the [Keys Management Command](#Manage-Postman-API-Keys)
 
 ```
 ? Collection Name
@@ -240,6 +241,37 @@ Plugins will auto update alongside the CLI, but to trigger an update directly ru
 
 ```
 nim update
+```
+
+## Manage Postman API Keys
+
+Postman Key Management facilitates to have multiple postman API secrets to be stored as key value pair, and one of them to be used as current.
+It also allows to switch between the keys using `switch` command and thus becoming the current key.
+The current key is then picked up automatically without user needing to type it in manually.
+
+Adding the first key makes it current:
+
+```
+nim auth postman -a --name mykey --key PMAK-5e2a993188ce8e003888f36b-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+the postman key with name 'mykey' was added and is now current
+```
+
+Following are the available options.
+
+```
+nim auth postman
+
+  -a, --add            Add a Postman API key
+  -c, --current        Show current Postman API key
+  -d, --delete=delete  Forget a previously added Postman API key
+  -l, --list           List previously added Postman API keys
+  -s, --switch=switch  Switch to using a particular previously added Postman API key
+  -v, --verbose        Greater detail in error messages
+  --help               Show help
+  --key=key            The Postman API Key
+  --name=name          The Postman Key Name
+  --show=show          Show the Postman API key associated with given name
 ```
 
 ---
