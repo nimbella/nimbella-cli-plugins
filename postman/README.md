@@ -70,8 +70,9 @@ It will present a guided prompt, with below steps
 ? Postman API Key
 ```
 
-Enter the key as given e.g. `PMAK-5e2a993188ce8e003888f36b-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`. You can easily generate one by visiting the [Postman Integrations Dashboard](https://go.postman.co/integrations/services/pm_pro_api)
-Manual key entering can be avoided using the [Keys Management Command](#Manage-Postman-API-Keys)
+Enter the key as given e.g. `PMAK-5e2a993188ce8e003888f36b-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`. You can easily generate one by visiting the [Postman Integrations Dashboard](https://go.postman.co/integrations/services/pm_pro_api).
+
+This step - entering of API key manually - can be avoided altogether using the [Keys Management Command](#Manage-Postman-API-Keys)
 
 ```
 ? Collection Name
@@ -139,6 +140,8 @@ At times you feel too impatient to navigate through questions and confirmations 
 nim project create -s postman -i CloudKV.ioAPI  -k <postman-key> -l php -c
 ```
 
+The option `-k` can be avoided using the [Keys Management Command](#Manage-Postman-API-Keys)
+
 Making the most out of your Postman Collection, this command traverses through each endpoint, generates mocks, unit tests and postman tests, merging well with tests that are in the collection already.
 
 Deploy the project using
@@ -166,7 +169,7 @@ Options:
 
 The `-i` stands for identity, it could be Collection Id, Name or even a file on your disk, provided it's a valid postman collection.
 
-The `-k` expects a postman key, but it's optional, if you are providing a collection file via `-i`.
+The `-k` expects a postman key, but it's optional, if you are providing a collection file via `-i` or you have used [Keys Management Command](#Manage-Postman-API-Keys) to set a current key.
 
 > If you want the collection to be pulled from the Postman cloud and do not have an API Key, you can easily generate one by heading over to the [Postman Integrations Dashboard](https://go.postman.co/integrations/services/pm_pro_api)
 
@@ -245,7 +248,7 @@ nim update
 
 ## Manage Postman API Keys
 
-Postman Key Management facilitates to have multiple postman API secrets to be stored as key value pair, and one of them to be used as current.
+Key management command facilitates to have multiple postman API secrets to be stored as key value pair, and allows one of them to be used as current.
 It also allows to switch between the keys using `switch` command and thus becoming the current key.
 The current key is then picked up automatically without user needing to type it in manually.
 
