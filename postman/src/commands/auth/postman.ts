@@ -106,16 +106,16 @@ export default class AuthPostman extends NimBaseCommand {
   async doAdd(logger: NimLogger, name: string, key: string) {
     await addPostmanKey(name, key, authPersister)
     logger.log(
-      `the postman key with name '${name}' was added and is now current`,
+      `the Postman key with name '${name}' was added and is now current.`,
     )
   }
 
   async doSwitch(name: string, logger: NimLogger) {
     const status = await switchPostmanKey(name, authPersister)
     if (status) {
-      logger.log(`the postman key with name '${name}' is now current`)
+      logger.log(`the Postman key with name '${name}' is now current`)
     } else {
-      logger.handleError(`${name} is not a previously added postman key`)
+      logger.handleError(`${name} is not a previously added Postman key`)
     }
   }
 
@@ -126,9 +126,9 @@ export default class AuthPostman extends NimBaseCommand {
     this.debug('keyNames: %O', keyNames)
     if (keyNames.length > 0) {
       const list = keyNames.join(', ')
-      logger.log(`previously added postman keys: ${list}`)
+      logger.log(`previously added Postman keys: ${list}`)
     } else {
-      logger.log('no previously added postman keys')
+      logger.log('no previously added Postman keys')
     }
   }
 
@@ -137,7 +137,7 @@ export default class AuthPostman extends NimBaseCommand {
     if (keys[name]) {
       logger.log(keys[name])
     } else {
-      logger.handleError(`${name} is not a previously added postman key`)
+      logger.handleError(`${name} is not a previously added Postman key`)
     }
   }
 
@@ -155,12 +155,12 @@ export default class AuthPostman extends NimBaseCommand {
     switch (status) {
     case 'DeletedOk':
       logger.log(
-        `the postman key with name '${name}' is removed from the credential store`,
+        `the Postman key with name '${name}' is removed from the credential store.`,
       )
       break
     case 'DeletedDangling':
       logger.log(
-        `the postman key with name '${name}' is removed from the credential store`,
+        `the Postman key with name '${name}' is removed from the credential store`,
       )
       logger.log(
         `'${name}' was the current key; use 'nim auth postman [ --add | --switch ] to establish a new one`,
@@ -168,7 +168,7 @@ export default class AuthPostman extends NimBaseCommand {
       break
     case 'NotExists':
       logger.handleError(
-        `${name} does not denote a previously added postman key`,
+        `${name} does not denote a previously added Postman key`,
       )
     }
   }
