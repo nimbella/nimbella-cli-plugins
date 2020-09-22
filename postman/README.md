@@ -248,19 +248,21 @@ nim update
 
 ## Manage Postman API Keys
 
-Key management command facilitates to have multiple postman API secrets to be stored as key value pair, and allows one of them to be used as current.
-It also allows to switch between the keys using `switch` command and thus becoming the current key.
+Key management with `nim auth postman` facilitates working with one or more Postman API keys.
+You can switch conveniently between them using the `nim auth postman switch` command.
 The current key is then picked up automatically without user needing to type it in manually.
 
-Adding the first key makes it current:
+Adding a key automatically makes it current.
+
+Here is an example of how to add a Postman API key:
 
 ```
 nim auth postman -a --name mykey --key PMAK-5e2a993188ce8e003888f36b-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-the postman key with name 'mykey' was added and is now current
+the Postman key with name 'mykey' was added and is now current.
 ```
 
-Following are the available options.
+Here are the available options.
 
 ```
 nim auth postman

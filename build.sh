@@ -60,14 +60,14 @@ while getopts "$optspec" optchar; do
                 echo built
                 ;;
         p)
-                rm -f ${BUILD}-*.tgz
+                rm -f nimbella-plugin-${BUILD}-*.tgz
                 npm pack
                 echo packed
                 ;;                
         t)
                 val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
                 TAG="${val}"                
-                mv ${BUILD}-*.tgz ${BUILD}-${TAG}.tgz
+                mv nimbella-plugin-${BUILD}-*.tgz ${BUILD}-${TAG}.tgz
                 echo tagged
                 ;;
         d)
