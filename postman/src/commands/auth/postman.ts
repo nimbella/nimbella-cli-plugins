@@ -98,7 +98,9 @@ export default class AuthPostman extends NimBaseCommand {
     } else if (flags.current) {
       await this.showCurrent(logger)
     } else {
-      this.doHelp()
+      try {
+        this.doHelp()
+      } catch (error) {}
     }
   }
 

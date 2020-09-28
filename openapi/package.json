@@ -15,7 +15,7 @@
     "@oclif/plugin-help": "^3.2.0",
     "@apidevtools/swagger-parser": "^9.0.1",
     "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
-    "nimbella-deployer": "https://preview-apigcp.nimbella.io/nimbella-deployer.tgz",
+    "nimbella-deployer": "https://preview-apigcp.nimbella.io/nimbella-deployer-1.8.0.tgz",
     "axios": "^0.19.2",
     "chalk": "^3.0.0",
     "dotenv": "^8.2.0",
