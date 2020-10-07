@@ -1,6 +1,6 @@
 {
   "name": "@nimbella/plugin-postman",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "Apache-2.0",
   "description": "Postman Collection to Nimbella Project : Take your APIs seamlessly into Serverless world with this [Nimbella CLI](https://nimbella.io/downloads/nim/nim.html) plugin",
   "author": {
