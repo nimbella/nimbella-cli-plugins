@@ -99,8 +99,12 @@
       ]
     }
   },
-  "repository": "https://github.com/nimbella/nimbella-cli-plugins",
-  "scripts": {
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/nimbella/nimbella-cli-plugins",
+    "directory": "postman/"
+  },
+    "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && cpx \"./src/generators/stub/templates/**/*\" ./lib/generators/stub/templates --clean && cpx \"./src/generators/test/templates/**\" ./lib/generators/test/templates --clean",
