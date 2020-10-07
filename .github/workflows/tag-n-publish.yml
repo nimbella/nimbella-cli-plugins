@@ -24,7 +24,7 @@ jobs:
         id: checkApispecgen
         uses: EndBug/version-check@v1
         with:
-          file-name: ./apispecgen/package.json
+          file-url: https://raw.githubusercontent.com/nimbella/nimbella-cli-plugins/main/apispecgen/package.json
       - name: Checkout repository
         uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node-version }}
