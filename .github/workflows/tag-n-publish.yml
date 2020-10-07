@@ -24,9 +24,7 @@ jobs:
         id: checkApispecgen
         uses: EndBug/version-check@v1
         with:
-          diff-search: true
-          file-name: apispecgen/package.json
-          token: ${{ secrets.GITHUB_TOKEN }}
+          file-name: ./apispecgen/package.json
       - name: Checkout repository
         uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node-version }}
