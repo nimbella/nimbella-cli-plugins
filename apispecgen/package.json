@@ -85,7 +85,11 @@
     ],
     "scope": "nimbella"
   },
-  "repository": "https://github.com//nimbella/nimbella-cli-plugins",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/nimbella/nimbella-cli-plugins",
+    "directory": "apispecgen"
+  },
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
