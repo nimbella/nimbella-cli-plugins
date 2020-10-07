@@ -102,7 +102,7 @@
   "repository": {
     "type" : "git",
     "url" : "https://github.com/nimbella/nimbella-cli-plugins",
-    "directory": "postman/"
+    "directory": "postman"
   },
     "scripts": {
     "postpack": "rm -f oclif.manifest.json",
