@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'postman/package.json'
+      - 'openapi/package.json'
+      - 'apispecgen/package.json'
 jobs:
   tag-n-publish:
     name: tag-n-publish
