@@ -7,6 +7,11 @@ on:
       - 'postman/package.json'
       - 'openapi/package.json'
       - 'apispecgen/package.json'
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
 jobs:
   tag-n-publish:
     name: tag-n-publish
@@ -15,6 +20,13 @@ jobs:
       matrix:
         node-version: [10.x, 12.x]
     steps:
+      - name: Check if apispecgen version has been updated
+        id: checkApispecgen
+        uses: EndBug/version-check@v1
+        with:
+          diff-search: true
+          file-name: apispecgen/package.json
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout repository
         uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node-version }}
@@ -22,12 +34,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Publish if version has been updated
+        if: steps.checkApispecgen.outputs.changed == 'true'
         uses: pascalgn/npm-publish-action@06e0830ea83eea10ed4a62654eeaedafb8bf50fc
         with:
-          tag_name: 'v%s'
-          tag_message: 'v%s'
+          tag_name: 'v%s-apispecgen'
+          tag_message: 'v%s-apispecgen'
           commit_pattern: "^Release (\\S+)"
-          workspace: '.'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          workspace: 'apispecgen'
