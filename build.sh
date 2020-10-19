@@ -1,6 +1,6 @@
 #!/bin/bash
-# bptd - build, pack, tag, and deploy 
-HELP_STR="usage: $0 -b [-p] [-t] [-d] [-h] [--build=<value>] [--pack] [--tag[=]<value>] [--deploy] [--help] \ne.g. \n./build.sh -b postman -p -t latest -d\n"
+# pbvd - plugin, build, version, and deploy
+HELP_STR="usage: $0 -p [-b] [-v] [-d] [-h] [--plugin=<value>] [--build] [--version[=]<value>] [--deploy] [--help] \ne.g. \n./build.sh -p postman -b -v patch -d\n"
 
 
 # Sanity check for build param
@@ -10,37 +10,34 @@ if [ -z ${1} ]; then
   exit 3
 fi
 
-optspec=":bptdh-:"
+optspec=":pbvdh-:"
 while getopts "$optspec" optchar; do
     case "${optchar}" in
         -)
             case "${OPTARG}" in
-                build)
+                plugin)
                     val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-                    BUILD="${val}"
-                    cd ${BUILD}
+                    PLUGIN="${val}"
+                    cd ${PLUGIN}
+                    ;;
+                build)
                     rm -rf node_modules
                     npm i
                     npm run build
                     echo built
                     ;;
-                pack)
-                    rm -f ${BUILD}-*.tgz
-                    npm pack
-                    echo packed
-                    ;;                    
-                tag)
+                version)
                     val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
                     TAG="${val}"                    
-                    mv ${BUILD}-*.tgz ${BUILD}-${TAG}.tgz
-                    echo tagged
+                    npm --no-git-tag-version version ${TAG}
+                    echo versioned ${TAG} ${PLUGIN}
                     ;;
                 deploy)
-                    gsutil rm  gs://nimaio-apigcp-nimbella-io/${BUILD}-*.tgz
-                    gsutil cp ${BUILD}-*.tgz gs://nimaio-apigcp-nimbella-io/
-                    gsutil setmeta -h "Cache-Control:no-cache" gs://nimaio-apigcp-nimbella-io/${BUILD}-*.tgz
-                    echo deployed
-                    ;;                       
+                    git tag -a ${PLUGIN}-${TAG} -m "${PLUGIN} ${TAG}"
+                    git config push.default current && git push && git push --tags
+                    npm publish --public
+                    echo published
+                    ;;                    
                 help)
                     val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
                     ;;
@@ -50,32 +47,29 @@ while getopts "$optspec" optchar; do
                     fi
                     ;;
             esac;;
-        b)
+        p)
                 val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-                BUILD="${val}"
-                cd ${BUILD}
+                PLUGIN="${val}"
+                cd ${PLUGIN}
+                ;;
+        b)
                 rm -rf node_modules
                 npm i
                 npm run build
                 echo built
                 ;;
-        p)
-                rm -f nimbella-plugin-${BUILD}-*.tgz
-                npm pack
-                echo packed
-                ;;                
-        t)
+        v)
                 val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
-                TAG="${val}"                
-                mv nimbella-plugin-${BUILD}-*.tgz ${BUILD}-${TAG}.tgz
-                echo tagged
+                TAG="${val}"                    
+                VERSION=`npm --no-git-tag-version version ${TAG}`
+                echo "versioned ${TAG} ${VERSION} for ${PLUGIN}"
                 ;;
         d)
-                gsutil rm  gs://nimaio-apigcp-nimbella-io/${BUILD}-*.tgz
-                gsutil cp ${BUILD}-*.tgz gs://nimaio-apigcp-nimbella-io/
-                gsutil setmeta -h "Cache-Control:no-cache" gs://nimaio-apigcp-nimbella-io/${BUILD}-*.tgz
-                echo deployed
-                ;;                
+                git tag -a "${PLUGIN}-${VERSION}" -m "${PLUGIN} ${TAG} ${VERSION}"
+                git config push.default current && git push --tags
+                npm publish --public
+                echo published
+                ;;                                  
         h)
                 echo "${HELP_STR}" >&2
                 exit 2
@@ -96,5 +90,5 @@ if [ -z "$1" ]; then
   exit 2
 fi
 
-echo "Done with building ${BUILD}!"
+echo "Done!"
 exit 0
