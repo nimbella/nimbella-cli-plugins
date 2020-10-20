@@ -15,13 +15,24 @@ import {join} from 'path'
 import {readFileSync} from 'fs'
 import Handlebars = require('handlebars');
 
-const templateFile = readFileSync(
+const templateReadMeFile = readFileSync(
   join(__dirname, '..', 'stub', 'templates', 'readme.hbs'),
 )
-const template = Handlebars.compile(templateFile.toString())
+const templateReadMe = Handlebars.compile(templateReadMeFile.toString())
 
-export default function getReadMe(description: string): string {
-  return template({
+const templateCollectionDocFile = readFileSync(
+  join(__dirname, '..', 'stub', 'templates', 'collection.hbs'),
+)
+const templateCollectionDoc = Handlebars.compile(
+  templateCollectionDocFile.toString(),
+)
+
+export function getReadMe(description: string): string {
+  return templateReadMe({
     description,
   })
+}
+
+export function getCollectionDoc(meta: object): string {
+  return templateCollectionDoc(meta)
 }

@@ -17,6 +17,8 @@ import {filter} from 'fuzzy'
 import Generator from '../invoker'
 import logger from '../logger'
 import PostmanFetcher from '../fetcher'
+import {writeFile} from '../writer'
+import {getCollectionDoc} from '../generators/stub/common-gen'
 import {
   getPostmanCurrentKey,
   authPersister,
@@ -26,6 +28,22 @@ import {
 require('dotenv').config()
 prompt.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
 const languages = ['go', 'js', 'ts', 'py', 'java', 'swift', 'php']
+
+const defaultPromptParams: PromptParams = {
+  type: 'input',
+  message: '',
+  choices: [],
+  source: undefined,
+  default: undefined,
+}
+interface PromptParams {
+  type: any;
+  message: string;
+  choices: string[] | undefined;
+  source: any;
+  default: any;
+}
+
 export default class Postman extends Command {
   static description = 'Generates nimbella project from a postman collection';
 
@@ -36,6 +54,8 @@ Generating nimbella project!
   ];
 
   static hidden = true;
+
+  static strict = false;
 
   static flags = {
     key: flags.string({
@@ -65,24 +85,80 @@ Generating nimbella project!
       default: true,
     }),
     update: flags.boolean({description: 'Updates a project', default: false}),
+    deploy: flags.boolean({
+      char: 'd',
+      description: 'Auto deploy',
+      default: false,
+    }),
+    init: flags.boolean({description: 'Initiate a project', default: false}),
   };
 
   async run() {
     const {flags} = this.parse(Postman)
-    const {update} = flags
+    const {update, init} = flags
     let furtherInquire = false
-    let {id, key, language, overwrite, updateSource, clientCode} = flags
+    let {
+      id,
+      key,
+      language,
+      overwrite,
+      updateSource,
+      clientCode,
+      deploy,
+    } = flags
+
+    if (init) {
+      const name = await this.getValue({
+        message: 'Name of the project',
+      })
+      const description = await this.getValue({
+        message: 'Project description',
+      })
+      const totalApis = await this.getValue({
+        type: 'number',
+        message: 'Number of APIs',
+        default: 1,
+      })
+      const apis = []
+      await (async () => {
+        /* eslint-disable no-await-in-loop */
+        for (let index = 1; index < totalApis + 1; index++) {
+          const name = await this.getValue({
+            message: `${index}. API name`,
+          })
+          const description = await this.getValue({
+            message: `${index}. Description of ${name}`,
+          })
+          const method = await this.getValue({
+            type: 'list',
+            message: `${index}. Verb for ${name}`,
+            choices: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
+            default: 'GET',
+          })
+          apis.push({name, description, method})
+        }
+      })()
+      /* eslint-enable no-await-in-loop */
+      const meta = {name, description, apis}
+      writeFile(
+        {
+          location: process.cwd(),
+          name: `${name}.collection`,
+          ext: 'json',
+          verbose: false,
+        },
+        getCollectionDoc(meta),
+      )
+      id = `${name}.collection.json`
+    }
+
     if (!key) {
       const keys = await getPostmanKeys(authPersister)
       const name = await getPostmanCurrentKey(authPersister)
       key = keys[name]
       if (!key) {
         key = await this.getValue({
-          type: 'input',
           message: 'Postman API Key',
-          choices: [],
-          source: undefined,
-          default: undefined,
         })
       }
     }
@@ -100,15 +176,13 @@ Generating nimbella project!
       ).map(e => e.original)
     }
 
-    if (!id) {
+    if (!init && !id) {
       id = await this.getValue({
         type: 'autocomplete',
         message: 'Collection Name',
-        choices: [],
         source: (results: any, input: any) => {
           return searchCollections(results, input)
         },
-        default: undefined,
       })
       furtherInquire = true
     }
@@ -118,30 +192,28 @@ Generating nimbella project!
         type: 'list',
         message: 'Target Language',
         choices: languages,
-        source: undefined,
         default: 'js',
       })
       overwrite = await this.getValue({
         type: 'confirm',
         message:
           'Overwrite the existing Nimbella Project directory if it exists',
-        choices: [],
-        source: undefined,
         default: true,
       })
       updateSource = await this.getValue({
         type: 'confirm',
         message: 'Sync Updated Collection back to Postman Cloud',
-        choices: [],
-        source: undefined,
         default: false,
       })
       clientCode = await this.getValue({
         type: 'confirm',
         message: 'Generate Client Code',
-        choices: [],
-        source: undefined,
         default: true,
+      })
+      deploy = await this.getValue({
+        type: 'confirm',
+        message: 'Auto deploy',
+        default: false,
       })
     }
 
@@ -150,11 +222,12 @@ Generating nimbella project!
       key,
       language,
       overwrite,
-      deploy: false,
+      deploy,
       deployForce: false,
       updateSource,
       clientCode,
       update,
+      init,
     })
     .generate()
     .catch((error: string) => {
@@ -163,21 +236,14 @@ Generating nimbella project!
     })
   }
 
-  private async getValue(promptParams: PromptParams) {
+  async getValue(promptParams: any) {
+    const options = {...defaultPromptParams, ...promptParams}
     const value = await prompt<{
       val: any;
     }>({
       name: 'val',
-      ...promptParams,
+      ...options,
     })
     return value.val
   }
-}
-
-interface PromptParams {
-  type: any;
-  message: string;
-  choices: string[] | undefined;
-  source: any;
-  default: any;
 }

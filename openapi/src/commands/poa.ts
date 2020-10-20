@@ -32,7 +32,7 @@ Generating nimbella project!
   ];
 
   static hidden = true;
-
+  static strict = false;
   static flags = {
     key: flags.string({
       char: 'k',

@@ -1,0 +1,75 @@
+{
+	"info": {
+		"name": "{{{name}}}",
+		"description": "{{{description}}}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+	{{#each apis}}
+        {
+			"name": "{{{name}}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "{{{method}}}",
+				"header": [],
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": []
+				},
+				"description": ""
+			},
+			"response": [
+				{
+					"name": "data",
+					"originalRequest": {
+						"method": "{{{method}}}",
+						"header": [],
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": []
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "x-powered-by",
+							"value": "Express"
+						}
+					],
+					"cookie": [],
+					"body": "{}"
+				}
+			]
+		}{{#unless @last}},{{/unless}}
+    {{/each}}   
+	],
+	"event": [],
+	"variable": [],
+	"protocolProfileBehavior": {}
+}

@@ -48,7 +48,7 @@ Generating Postman API Specifications!
   ];
 
   static hidden = true;
-
+  static strict = false;
   static flags = {
     overwrite: flags.boolean({
       char: 'o',
@@ -56,22 +56,21 @@ Generating Postman API Specifications!
         'Overwrites the existing nimbella project directory if it exists',
       default: false,
     }),
+    
+    type: flags.string({
+        char: 't',
+        description: 'Target API Specification Format',
+        options: supportedFormats,
+    }),
   };
 
-  static args = [
-    {
-      name: 'spec',
-      description: 'Target API Specification Format',
-      options: supportedFormats,
-    },
-  ];
+ 
 
   async run() {
-    const {args, flags} = this.parse(ApiSpec)
-    let {spec} = args
-    let {overwrite} = flags
+    const {flags} = this.parse(ApiSpec)
+    let {overwrite, type} = flags
 
-    if (!spec) {
+    if (!type) {
       const params: PromptParams = {
         type: 'list',
         message: 'Target API Specification Format',
@@ -79,7 +78,7 @@ Generating Postman API Specifications!
         source: undefined,
         default: 'nimbella',
       }
-      spec = await this.getValue(params)
+      type = await this.getValue(params)
     }
     if (!overwrite) {
       const params: PromptParams = {
@@ -91,7 +90,7 @@ Generating Postman API Specifications!
       }
       overwrite = await this.getValue(params)
     }
-    new Generator(spec, overwrite).generate().catch((error: string) => {
+    new Generator(type, overwrite).generate().catch((error: string) => {
       console.log('Oops! Some Error Occurred, Please Try Again')
       logger.error(error)
     })

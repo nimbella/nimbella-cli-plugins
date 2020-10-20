@@ -67,6 +67,8 @@ export default class Generate {
 
   update: boolean;
 
+  init: boolean;
+
   deploy: boolean;
 
   deployForce: boolean;
@@ -77,12 +79,15 @@ export default class Generate {
 
   projectGenerator: ProjectGenerator;
 
+  namespace: string;
+
   constructor(options: InvokerOptions) {
     this.id = options.id
     this.key = options.key
     this.language = options.language
     this.overwrite = options.overwrite
     this.update = options.update
+    this.init = options.init
     this.deploy = options.deploy
     this.deployForce = options.deployForce
     this.updateSource = options.updateSource
@@ -101,8 +106,12 @@ export default class Generate {
 
     langExt = genInstance.ext
 
+    // if (this.init) {
+    //   pm = read(this.id)
+    // } else
     // if key is given, get collection from the Postman Cloud
-    if (this.key) {
+    if (this.key && !existsSync(this.id)) {
+      console.log(this.id)
       const fetcher = new PostmanFetcher(this.key)
       if (!isGuid(collectionId)) {
         const id = await fetcher.getCollectionGuid(collectionId)
@@ -405,6 +414,19 @@ export default class Generate {
               pm,
             ),
         },
+        {
+          title: 'Deploying',
+          skip: () => {
+            if (this.deploy) {
+              return false
+            }
+            return true
+          },
+          task: async () => {
+            const namespace = await this.projectGenerator.getCurrentNamespace()
+            this.projectGenerator.deployProject(process.cwd(), namespace)
+          },
+        },
       ])
 
       tasks.run().catch((error: any) => {
@@ -429,4 +451,5 @@ export interface InvokerOptions {
   updateSource: boolean;
   clientCode: boolean;
   update: boolean;
+  init: boolean;
 }
