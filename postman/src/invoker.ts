@@ -13,7 +13,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {existsSync} from 'fs'
+import {existsSync, statSync} from 'fs'
 import {join} from 'path'
 import {blue, red, green} from 'chalk'
 import {ItemGroup} from 'postman-collection'
@@ -105,13 +105,8 @@ export default class Generate {
     if (!langVariant) langVariant = genInstance.variant
 
     langExt = genInstance.ext
-
-    // if (this.init) {
-    //   pm = read(this.id)
-    // } else
     // if key is given, get collection from the Postman Cloud
-    if (this.key && !existsSync(this.id)) {
-      console.log(this.id)
+    if (this.key && !statSync(this.id).isFile()) {
       const fetcher = new PostmanFetcher(this.key)
       if (!isGuid(collectionId)) {
         const id = await fetcher.getCollectionGuid(collectionId)

@@ -231,7 +231,8 @@ Generating nimbella project!
     })
     .generate()
     .catch((error: string) => {
-      logger.error('Oops! Some Error Occurred, Please Try Again', error)
+      console.log('Oops! Some Error Occurred, Please Try Again')
+      logger.error(error)
     })
   }
 
