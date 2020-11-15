@@ -1,6 +1,6 @@
 {
   "name": "@nimbella/plugin-apispecgen",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "license": "Apache-2.0",
   "description": "Nimbella API Specifications Generator - [A Nimbella CLI](https://nimbella.io/downloads/nim/nim.html) plugin. Generates postman, openapi, nimbella project configuration file in an existing nimbella project",
   "author": {
@@ -86,8 +86,8 @@
     "scope": "nimbella"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/nimbella/nimbella-cli-plugins",
+    "type": "git",
+    "url": "https://github.com/nimbella/nimbella-cli-plugins",
     "directory": "apispecgen"
   },
   "scripts": {
