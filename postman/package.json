@@ -1,6 +1,6 @@
 {
   "name": "@nimbella/plugin-postman",
-  "version": "0.0.3",
+  "version": "0.1.1",
   "license": "Apache-2.0",
   "description": "Postman Collection to Nimbella Project : Take your APIs seamlessly into Serverless world with this [Nimbella CLI](https://nimbella.io/downloads/nim/nim.html) plugin",
   "author": {
@@ -95,16 +95,15 @@
     ],
     "scope": "nimbella",
     "hooks": {
-      "init": [   
-      ]
+      "init": []
     }
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/nimbella/nimbella-cli-plugins",
+    "type": "git",
+    "url": "https://github.com/nimbella/nimbella-cli-plugins",
     "directory": "postman"
   },
-    "scripts": {
+  "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && cpx \"./src/generators/stub/templates/**/*\" ./lib/generators/stub/templates --clean && cpx \"./src/generators/test/templates/**\" ./lib/generators/test/templates --clean",
