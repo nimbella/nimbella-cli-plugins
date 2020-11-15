@@ -48,7 +48,7 @@ export default class Postman extends Command {
   static description = 'Generates nimbella project from a postman collection';
 
   static examples = [
-    `$ nim project create -s postman -i CloudKV.ioAPI -k PMAK-5e2a993188ce8e003888f36b-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    `$ nim project create -t postman -i CloudKV.ioAPI -k PMAK-5e2a993188ce8e003888f36b-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 Generating nimbella project!
 `,
   ];
@@ -231,8 +231,7 @@ Generating nimbella project!
     })
     .generate()
     .catch((error: string) => {
-      console.log('Oops! Some Error Occurred, Please Try Again')
-      logger.error(error)
+      logger.error('Oops! Some Error Occurred, Please Try Again', error)
     })
   }
 
