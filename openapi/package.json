@@ -1,6 +1,6 @@
 {
   "name": "@nimbella/plugin-openapi",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "license": "Apache-2.0",
   "description": "OpenApi Document to Nimbella Project : Take your APIs seamlessly into Serverless world with this [Nimbella CLI](https://nimbella.io/downloads/nim/nim.html) plugin",
   "author": {
@@ -99,8 +99,8 @@
     "scope": "nimbella"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/nimbella/nimbella-cli-plugins",
+    "type": "git",
+    "url": "https://github.com/nimbella/nimbella-cli-plugins",
     "directory": "openapi"
   },
   "scripts": {
