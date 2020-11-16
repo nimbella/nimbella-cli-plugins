@@ -6,9 +6,11 @@
     "module": "commonjs",
     "outDir": "lib",
     "rootDir": "src",
-    "target": "es2017"   
+    "target": "es2017"  ,
+    "lib": ["es2017", "dom"], 
   },
   "include": [
     "src/**/*"
-  ]
+  ],
+  "exclude": ["node_modules", "lib"]
 }

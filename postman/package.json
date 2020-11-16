@@ -9,6 +9,8 @@
     "url": "https://nimbella.com/"
   },
   "bugs": "https://github.com/nimbella/nimbella-cli-plugins/issues",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "dependencies": {
     "@oclif/command": "^1.6.1",
     "@oclif/config": "^1.15.1",
