@@ -13,7 +13,7 @@
     "@oclif/command": "^1.6.1",
     "@oclif/config": "^1.15.1",
     "@oclif/plugin-help": "^3.2.0",
-    "nimbella-deployer": "https://preview-apigcp.nimbella.io/nimbella-deployer-1.8.0.tgz",
+    "nimbella-deployer": "https://preview-apigcp.nimbella.io/nimbella-deployer-1.10.2.tgz",
     "chalk": "^4.0.0",
     "handlebars": "^4.7.6",
     "listr": "^0.14.3",
