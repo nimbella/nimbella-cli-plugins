@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "fce1097b-af4d-4a02-ad6c-fe090b9076d4",
+		"name": "OCR",
+		"description": "Serverless OCR Application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Utils",
+			"item": [
+				{
+					"name": "Slack",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/utils/slack",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"utils",
+								"slack"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AcceptImage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/ocr/acceptImage",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"ocr",
+						"acceptImage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Credentials",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/ocr/credential",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"ocr",
+						"credential"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ImageToText",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/ocr/imageToText",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"ocr",
+						"imageToText"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Progress",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/ocr/progress",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"ocr",
+						"progress"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TextToSpeech",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/ocr/textToSpeech",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"ocr",
+						"textToSpeech"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

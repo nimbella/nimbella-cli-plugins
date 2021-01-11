@@ -1,0 +1,13 @@
+package main
+
+
+/*Main {{{description}}} */
+func Main(args map[string]interface{}) map[string]interface{} {
+	msg := make(map[string]interface{})
+	{{#if body}}
+	msg["body"] = `{{{body}}}`
+	{{else}}
+	msg["body"] = ""
+	{{/if}}
+	return msg
+}

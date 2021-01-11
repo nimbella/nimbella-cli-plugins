@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "924fa928-c967-4908-903f-cc2bb55753b2",
+		"name": "Printer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Flush",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/admin/flush",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"admin",
+								"flush"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "filename",
+							"value": "test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/printer/create",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"printer",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/printer/get",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"printer",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/printer/list",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"printer",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notify",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/printer/notify",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"printer",
+						"notify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "fileId",
+							"value": "123",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "pending",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/printer/update",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"printer",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

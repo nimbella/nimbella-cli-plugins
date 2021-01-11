@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "d18becaf-36d8-42f1-ade5-b6ba4eb43e60",
+		"name": "Trading",
+		"description": "## Nimbella Trading Demo ##\n\nThis demo allows a user to buy and sell stock (virtually), shows updated stock positions and also displays information about a given stock.\n\nThe front-end is written in React.\n\nThe back-end is a set of serverless functions written in JavaScript.\n\nThe back-end functions connect to the IEX Cloud to obtain live stock information. The IEX Cloud requires an API token to get stock information. An IEX Cloud API token is available for free by:\n\n1. Visit https://iexcloud.io\n2. Click 'Get started'\n3. Enter an email address and password\n4. Select the '$0/Start' option\n5. Verify your email address by click on the link in the email sent to you\n6. Click 'API tokens' in the IEX web interface that comes up\n7. In the interface, you see see your secret API token\n\nPlace the API token for the IEX Cloud into the environment as environment variable `IEXCLOUD_API_TOKEN` when using the Nimbella deployer to deploy this project.  One way to do this is to use a `.env` file as described in the Nimbella deployer documentation.\n\nThe functions use the Nimbella Redis key-value store to manage persisted data. The Nimbella API host is set at build time via REACT_APP_NIMBELLA_PROJECT_ROOT.\n\nA Swagger API definition for the back-end functions is contained in the swagger .yaml file\n\n## License ##\n\nCopyright 2019 Nimbella Corp\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    https://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TradeDemo",
+			"item": [
+				{
+					"name": "BuyStock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/tradedemo/buyStock",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"tradedemo",
+								"buyStock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCashBalance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/tradedemo/getCashBalance",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"tradedemo",
+								"getCashBalance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPositions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/tradedemo/getPositions",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"tradedemo",
+								"getPositions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStockDescription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/tradedemo/getStockDescription",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"tradedemo",
+								"getStockDescription"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStockHistory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/tradedemo/getStockHistory",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"tradedemo",
+								"getStockHistory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewAccount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/tradedemo/newAccount",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"tradedemo",
+								"newAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SellStock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{namespace}}-apigcp.nimbella.io/api/tradedemo/sellStock",
+							"protocol": "https",
+							"host": [
+								"{{namespace}}-apigcp",
+								"nimbella",
+								"io"
+							],
+							"path": [
+								"api",
+								"tradedemo",
+								"sellStock"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4a54605a-e9b9-4bde-9332-828b54ce3b86",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "add50edd-8fe6-4d81-802e-42a1ec81cb97",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

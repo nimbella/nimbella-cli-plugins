@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "b54b7781-0343-48bf-8519-d68d54113df3",
+		"name": "Calc",
+		"description": "A simple calculator showing how to use state, nodejs packages, html, and functions.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "eval.json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "715e0643-811e-4e53-a753-a6d255f2f7c4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{namespace}}-apigcp.nimbella.io/api/calc/eval.json?text=2%2B2",
+					"protocol": "https",
+					"host": [
+						"{{namespace}}-apigcp",
+						"nimbella",
+						"io"
+					],
+					"path": [
+						"api",
+						"calc",
+						"eval.json"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "2%2B2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

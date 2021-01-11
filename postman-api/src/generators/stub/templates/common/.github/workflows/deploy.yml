@@ -1,0 +1,12 @@
+
+name: Deploy
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/nimbella-deploy-action@v1
+      with:
+        nimbella-token: ${{ secrets.NIMBELLA_LOGIN_TOKEN }}

@@ -1,0 +1,80 @@
+const { main } = require('../../packages/{{packageName}}/{{methodName}}/index');
+
+{{#if body}}
+test('returned response matches', () => {
+  expect(main().body).toBe({{{body}}});
+});
+{{/if}}
+
+{{#if isPostRequest}}
+test('Successful POST request', function () {
+    const response = main();
+    expect([200,201,202]).toContain(response.statusCode) 
+});
+{{else}}
+test('response is ok', function () {
+     const response = main();
+    expect(response.statusCode).toBe(200);
+});
+{{/if}}
+
+test('response json data should not have errors', function () {
+    const response = main();
+    expect(response).not.toHaveProperty('error');
+});
+{{#if headers}}
+{{#each headers}}
+test('{{{this.key}}} header is present', function () {
+   const response = main();
+   expect(response.headers).toHaveProperty('{{{this.key}}}');
+});
+
+{{/each}}
+{{/if}}
+{{#if mandatoryProps}}
+test('Should have valid response', function () {
+         const response = main();
+    {{#each mandatoryProps}}
+         expect(response.body).toHaveProperty('{{{this}}}')
+    {{/each}}
+});
+
+{{/if}}
+{{#if propTypes}}
+{{#each propTypes}}
+test('response json should contain {{{this.key}}}', function () {
+    const response = main();
+    expect(response.json()).to.have.property('{{{this.key}}}').and.be.an('{{{this.value}}}');
+});
+
+{{/each}}
+{{/if}}
+{{#if propChildKeys}}
+{{#each propChildKeys}}
+test('response json should return {{{this.key}}} details', function () {
+    const response = main();
+    expect(response.json()).to.have.property('{{{this.key}}}'),
+        .and.to.include.keys([{{#each this.value}} {{this}}, {{/each}}]);
+});
+
+{{/each}}
+{{/if}}
+{{#if envVars}}
+{{#each envVars}}
+test('{{{this}}} variable should be present', function () {
+    expect(process.env.{{this}}).to.be.a('string');
+});
+
+{{/each}}
+{{/if}}
+{{#if testScripts}}
+
+function consolidatedTests() {
+    const response = main();    
+
+{{#each testScripts}}
+    {{{this}}}
+{{/each}}
+}
+
+{{/if}}

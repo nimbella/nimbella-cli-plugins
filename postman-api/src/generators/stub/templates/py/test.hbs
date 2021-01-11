@@ -1,0 +1,14 @@
+import unittest
+target = __import__('../../packages/{{packageName}}/{{methodName}}/index.py')
+
+class TestMethods(unittest.TestCase):
+
+    def test_upper(self):
+    {{#if body}}
+        self.assertEqual({{{body}}}, target.main)
+    {{else}} 
+        self.assertEqual("", target.main)
+    {{/if}}
+{{!-- 
+if __name__ == '__main__':
+    unittest.main() --}}
