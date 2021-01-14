@@ -35,7 +35,7 @@ while getopts "$optspec" optchar; do
                 deploy)
                     git tag -a ${PLUGIN}-${TAG} -m "${PLUGIN} ${TAG}"
                     git config push.default current && git push && git push --tags
-                    npm publish --public
+                    npm publish --access=public
                     echo published
                     ;;                    
                 help)
@@ -67,7 +67,7 @@ while getopts "$optspec" optchar; do
         d)
                 git tag -a "${PLUGIN}-${VERSION}" -m "${PLUGIN} ${TAG} ${VERSION}"
                 git config push.default current && git push --tags
-                npm publish --public
+                npm publish --access=public
                 echo published
                 ;;                                  
         h)
