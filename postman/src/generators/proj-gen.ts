@@ -89,7 +89,7 @@ export default class ProjectGenerator {
 
   async deployProject(projectPath: string, namespace: string): Promise<void> {
     const cmd = `nim project deploy ${projectPath} --target ${namespace}`
-    this.execShellCommand(cmd)
+    this.execShellCommand(cmd, true)
   }
 
   async createDir(base: string, dir: string, verbose = true): Promise<void> {
