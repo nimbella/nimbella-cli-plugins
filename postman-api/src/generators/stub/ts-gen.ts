@@ -11,15 +11,15 @@
  * governing permissions and limitations under the License.
  */
 
-import {readFileSync} from 'fs'
-import {join} from 'path'
-import {compile} from 'handlebars'
-import {sanitizeFileName, SupportingItem} from '../../utils'
-import BaseGenerator from './base-gen'
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { compile } from 'handlebars';
+import { sanitizeFileName, SupportingItem } from '../../utils';
+import BaseGenerator from './base-gen';
 
 export default class TsGenerator extends BaseGenerator {
   constructor() {
-    super('ts')
+    super('ts');
   }
 
   private eslintStub = readFileSync(join(this.tmplPath, 'eslint.hbs'));
@@ -31,14 +31,14 @@ export default class TsGenerator extends BaseGenerator {
   private tmplPackage = compile(this.packageStub.toString());
 
   getSupportingItems(collection: any): Array<SupportingItem> {
-    const name = sanitizeFileName(collection.name || '')
-    const desc = (collection.description || '').content
-    const re = new RegExp(/^(.*?)[.?!]\s/)
-    const shortDesc = re.exec(desc)
+    const name = sanitizeFileName(collection.name || '');
+    const desc = (collection.description || '').content;
+    const re = new RegExp(/^(.*?)[.?!]\s/);
+    const shortDesc = re.exec(desc);
     const params = {
       name,
       description: shortDesc ? shortDesc[0] : '',
-    }
+    };
     return [
       {
         location: '.gitignore',
@@ -54,6 +54,6 @@ export default class TsGenerator extends BaseGenerator {
           ...params,
         }),
       },
-    ]
+    ];
   }
 }

@@ -45,7 +45,7 @@ declare module 'postman-collection-transformer' {
       boolean: string;
       number: string;
       string: string;
-    }
+    };
 
     function addProtocolProfileBehavior(source: any, destination: any): any;
 

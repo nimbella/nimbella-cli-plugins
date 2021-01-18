@@ -11,16 +11,16 @@
  * governing permissions and limitations under the License.
  */
 
-import {readFileSync} from 'fs'
-import {Collection} from 'postman-collection'
-import {join} from 'path'
-import {compile} from 'handlebars'
-import {SupportingItem} from '../../utils'
-import BaseGenerator from './base-gen'
+import { readFileSync } from 'fs';
+import { Collection } from 'postman-collection';
+import { join } from 'path';
+import { compile } from 'handlebars';
+import { SupportingItem } from '../../utils';
+import BaseGenerator from './base-gen';
 
 export default class PhpGenerator extends BaseGenerator {
   constructor() {
-    super('php')
+    super('php');
   }
 
   private composerStub = readFileSync(join(this.tmplPath, 'composer.hbs'));
@@ -37,6 +37,6 @@ export default class PhpGenerator extends BaseGenerator {
         location: 'composer.json',
         content: this.tmplComposer(this),
       },
-    ]
+    ];
   }
 }

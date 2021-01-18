@@ -3,4 +3,4 @@ export const urls = [
   'https://www.googleapis.com/',
   'https://api.github.com/',
   'https://developers.facebook.com/',
-]
+];

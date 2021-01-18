@@ -13,47 +13,45 @@
  * governing permissions and limitations under the License.
  */
 
-import {existsSync} from 'fs'
-import {join} from 'path'
-import {blue, red, green} from 'chalk'
-import {ItemGroup} from 'postman-collection'
-import {isValid, CollectionInfo} from './reader'
+import { existsSync } from 'fs';
+import { join } from 'path';
+import { blue, red, green } from 'chalk';
+import { ItemGroup } from 'postman-collection';
+import { isValid, CollectionInfo } from './reader';
 import {
   getInstance,
   getMethodStub,
   getTestStub,
   getMethodValidationStub,
   getGlobalValidationStub,
-} from './generators/stub/stub-gen'
+} from './generators/stub/stub-gen';
 import {
   getSuccessSuite,
   getFailureSuite,
   getEnvVars,
   getMethodValidations,
   getGlobalValidations,
-} from './generators/test/test-gen'
-import {sanitizeFileName, isGuid, isPublicApi} from './utils'
-import PostmanFetcher from './fetcher'
-import PostmanSyncer from './syncer'
-import GeneratorInfo from './generators/stub/gen-info'
-import logger from './logger'
+} from './generators/test/test-gen';
+import { sanitizeFileName, isGuid, isPublicApi } from './utils';
+import PostmanFetcher from './fetcher';
+import PostmanSyncer from './syncer';
+import GeneratorInfo from './generators/stub/gen-info';
 import {
   upgrade,
   saveCollection,
   writeOrUpdateFile,
   appendEnvFile,
-} from './writer'
-import ProjectGenerator from './generators/proj-gen'
-import Listr = require('listr');
+} from './writer';
+import ProjectGenerator from './generators/proj-gen';
 
-let langExt: string
-let langVariant: string
-let lang: string
-let collectionName: string
-let genInstance: GeneratorInfo
-let pm: CollectionInfo
-let workDir: string
-let collectionId: string
+let langExt: string;
+let langVariant: string;
+let lang: string;
+let collectionName: string;
+let genInstance: GeneratorInfo;
+let pm: CollectionInfo;
+let workDir: string;
+let collectionId: string;
 
 export default class Generate {
   id: string | undefined;
@@ -78,96 +76,97 @@ export default class Generate {
 
   projectGenerator: ProjectGenerator;
 
-  namespace: string;
+  targetNamespace: string;
 
   constructor(options: InvokerOptions) {
-    this.id = options.id
-    this.key = options.key
-    this.language = options.language
-    this.overwrite = options.overwrite
-    this.update = options.update
-    this.init = options.init
-    this.deploy = options.deploy
-    this.deployForce = options.deployForce
-    this.updateSource = options.updateSource
-    this.clientCode = options.clientCode
-    this.projectGenerator = new ProjectGenerator()
+    this.id = options.id;
+    this.key = options.key;
+    this.language = options.language;
+    this.overwrite = options.overwrite;
+    this.update = options.update;
+    this.init = options.init;
+    this.deploy = options.deploy;
+    this.deployForce = options.deployForce;
+    this.updateSource = options.updateSource;
+    this.clientCode = options.clientCode;
+    this.targetNamespace = options.targetNamespace;
+    this.projectGenerator = new ProjectGenerator();
   }
 
   validate = async () => {
-    lang = this.language
+    lang = this.language;
     if (lang.includes(':')) {
       const langDetail = lang.split(':');
-      [lang, langVariant] = langDetail
+      [lang, langVariant] = langDetail;
     }
-    genInstance = getInstance(lang)
-    if (!langVariant) langVariant = genInstance.variant
+    genInstance = getInstance(lang);
+    if (!langVariant) langVariant = genInstance.variant;
 
-    langExt = genInstance.ext
+    langExt = genInstance.ext;
     if (this.key) {
-      const fetcher = new PostmanFetcher(this.key)
+      const fetcher = new PostmanFetcher(this.key);
       if (!isGuid(collectionId)) {
-        const id = await fetcher.getCollectionGuid(collectionId)
-        collectionId = id
+        const id = await fetcher.getCollectionGuid(collectionId);
+        collectionId = id;
       }
-      pm = await fetcher.getCollectionWithVersion(collectionId)
+      pm = await fetcher.getCollectionWithVersion(collectionId);
     }
     if (!pm.collection) {
-      console.log(`Couldn't read collection ${blue(collectionId)}`)
-      throw new Error(`Couldn't read collection ${collectionId}`)
+      console.log(`Couldn't read collection ${blue(collectionId)}`);
+      throw new Error(`Couldn't read collection ${collectionId}`);
     }
 
     if (pm.collection && !isValid(pm.collection)) {
-      console.log(`${blue(collectionId)} is not a valid Postman collection.`)
-      throw new Error(`${collectionId} is not a valid Postman collection.`)
+      console.log(`${blue(collectionId)} is not a valid Postman collection.`);
+      throw new Error(`${collectionId} is not a valid Postman collection.`);
     }
     if (!pm.isVersion2X) {
       console.log(
         `${blue(
-          collectionId,
+          collectionId
         )} is not in version 2.x format of postman collection. ${green(
-          'Attempting with a converted version.',
-        )}`,
-      )
-      pm.collection = upgrade(collectionId)
+          'Attempting with a converted version.'
+        )}`
+      );
+      pm.collection = upgrade(collectionId);
     }
 
-    collectionName = sanitizeFileName(pm.collection.name)
+    collectionName = sanitizeFileName(pm.collection.name);
 
     if (existsSync(collectionName) && !(this.overwrite || this.update)) {
       console.log(
-        `Oops! a directory named ${blue(collectionName)} already exists.`,
-      )
+        `Oops! a directory named ${blue(collectionName)} already exists.`
+      );
       console.log(
-        `Please move the directory or use ${blue('--overwrite')} to continue...`,
-      )
-      console.log(`${red("'--overwrite or -o' will delete the directory.")}`)
+        `Please move the directory or use ${blue('--overwrite')} to continue...`
+      );
+      console.log(`${red("'--overwrite or -o' will delete the directory.")}`);
       throw new Error(
-        `Oops! a directory named ${collectionName} already exists.`,
-      )
+        `Oops! a directory named ${collectionName} already exists.`
+      );
     }
   };
 
   generateActions = async () => {
     async function itemGroupOps(itemsOpsArray: any) {
       for await (const item of itemsOpsArray) {
-        item
+        item;
       }
     }
 
     const validationScripts = async (
       item: any,
       actionPath: string,
-      itemName: string,
+      itemName: string
     ) => {
       if (item.events && item.events.members) {
         const validations = item.events.members.filter(
-          (i: any) => i.listen === 'prerequest',
-        )
+          (i: any) => i.listen === 'prerequest'
+        );
         if (validations.length > 0 && validations[0].script.exec) {
           const methodValidationStub = await getMethodValidationStub(
-            getMethodValidations(validations[0].script.exec),
-          )
+            getMethodValidations(validations[0].script.exec)
+          );
           writeOrUpdateFile(
             {
               location: join(workDir, 'packages', actionPath, itemName),
@@ -176,14 +175,14 @@ export default class Generate {
               verbose: true,
             },
             methodValidationStub,
-            this.update,
-          )
+            this.update
+          );
           // write global validation
-          const preRequest = validations[0].script.exec.join('/n')
+          const preRequest = validations[0].script.exec.join('/n');
           if (preRequest.includes('pm.globals.set')) {
             const globalValidationStub = await getGlobalValidationStub(
-              getGlobalValidations(validations[0].script.exec),
-            )
+              getGlobalValidations(validations[0].script.exec)
+            );
             writeOrUpdateFile(
               {
                 location: join(workDir, 'lib'),
@@ -192,42 +191,42 @@ export default class Generate {
                 verbose: true,
               },
               globalValidationStub,
-              this.update,
-            )
+              this.update
+            );
           }
           if (preRequest.includes('pm.environment.set')) {
             appendEnvFile(
               workDir,
-              getEnvVars(undefined, validations[0].script.exec),
-            )
+              getEnvVars(undefined, validations[0].script.exec)
+            );
           }
         }
       }
-    }
+    };
 
     const testScripts = async (item: any, response: any, request: any) => {
       let testArray = item.events.members.filter(
-        (i: any) => i.listen === 'test',
-      )
-      let testSuite
+        (i: any) => i.listen === 'test'
+      );
+      let testSuite;
       if (!response || (response.code >= 200 && response.code < 300))
-        testSuite = getSuccessSuite(request, response, pm.collection.variables)
-      else testSuite = getFailureSuite()
-      testSuite = testSuite.replace(/\n/g, '').split('*#!')
+        testSuite = getSuccessSuite(request, response, pm.collection.variables);
+      else testSuite = getFailureSuite();
+      testSuite = testSuite.replace(/\n/g, '').split('*#!');
       if (testArray.length > 0) {
-        testArray[0].script.exec = testArray[0].script.exec.concat(testSuite)
+        testArray[0].script.exec = testArray[0].script.exec.concat(testSuite);
       } else {
-        testArray = [{script: {exec: []}}]
-        testArray[0].script.exec = testSuite
+        testArray = [{ script: { exec: [] } }];
+        testArray[0].script.exec = testSuite;
       }
-    }
+    };
 
     const getURL = async (actionPath: string, isWebAction = false) => {
-      const namespace = '-'
+      // const namespace = '-'
       if (isWebAction)
-        return `https://apigcp.nimbella.io/api/v1/web/${namespace}/${actionPath}`
-      return `https://${namespace}-apigcp.nimbella.io/api/${actionPath}`
-    }
+        return `https://apigcp.nimbella.io/api/v1/web/${this.targetNamespace}/${actionPath}`;
+      return `https://${this.targetNamespace}-apigcp.nimbella.io/api/${actionPath}`;
+    };
 
     const updateURL = async (item: any, modifiedUrl: any) => {
       if (
@@ -235,40 +234,40 @@ export default class Generate {
         item.request.url.variables.members.length > 0
       ) {
         modifiedUrl += `/${item.request.url.variables.members
-        .map((q: any) => `:${q.key}`)
-        .join('/')}`
+          .map((q: any) => `:${q.key}`)
+          .join('/')}`;
       }
       if (item.request.url.query && item.request.url.query.members.length > 0) {
         modifiedUrl += `?${item.request.url.query.members
-        .map((q: any) => `${q.key}=${q.value}`)
-        .join('&')}`
+          .map((q: any) => `${q.key}=${q.value}`)
+          .join('&')}`;
       }
-      item.request.url = new URL(modifiedUrl)
+      item.request.url = new URL(modifiedUrl);
       for (const res of item.responses.members) {
-        res.originalRequest.url = item.request.url
+        res.originalRequest.url = item.request.url;
       }
-      return modifiedUrl
-    }
+      return modifiedUrl;
+    };
 
     const itemOps = async (item: any) => {
       if (ItemGroup.isItemGroup(item)) {
-        const itemsOpsArray = item.items.map(itemOps)
-        itemGroupOps(itemsOpsArray)
-        return
+        const itemsOpsArray = item.items.map(itemOps);
+        itemGroupOps(itemsOpsArray);
+        return;
       }
 
-      const actionPath = sanitizeFileName(item.parent().name as string)
-      const itemName = sanitizeFileName(item.name)
+      const actionPath = sanitizeFileName(item.parent().name as string);
+      const itemName = sanitizeFileName(item.name);
       // write root level actions in project.yml
       if (actionPath === collectionName) {
         this.projectGenerator.updateProjectYML(
           workDir,
-          `      - name: ${itemName}\n`,
-        )
+          `      - name: ${itemName}\n`
+        );
       }
       // create nimbella project
       if (!isPublicApi(item.request.url.toString())) {
-        const methodStub = await getMethodStub(item)
+        const methodStub = await getMethodStub(item);
         writeOrUpdateFile(
           {
             location: join(workDir, 'packages', actionPath, itemName),
@@ -277,16 +276,16 @@ export default class Generate {
             verbose: true,
           },
           methodStub,
-          this.update,
-        )
-        const originalUrl = item.request.url.toString()
-        let modifiedUrl = originalUrl
-        modifiedUrl = await getURL(`${actionPath}/${itemName}`)
+          this.update
+        );
+        const originalUrl = item.request.url.toString();
+        let modifiedUrl = originalUrl;
+        modifiedUrl = await getURL(`${actionPath}/${itemName}`);
         if (originalUrl !== modifiedUrl) {
-          modifiedUrl = updateURL(item, modifiedUrl)
+          modifiedUrl = updateURL(item, modifiedUrl);
         }
       }
-      const testStub = await getTestStub(item, workDir)
+      const testStub = await getTestStub(item, workDir);
       writeOrUpdateFile(
         {
           location: join(workDir, 'test', actionPath),
@@ -295,17 +294,17 @@ export default class Generate {
           verbose: true,
         },
         testStub,
-        this.update,
-      )
+        this.update
+      );
 
-      const {request} = item
-      const [response]: any = item.responses.members
+      const { request } = item;
+      const [response]: any = item.responses.members;
       // test generation
-      await validationScripts(item, actionPath, itemName)
-      await testScripts(item, response, request)
-    }
-    const itemsOpsArray = pm.collection.items.map(itemOps, undefined)
-    return itemGroupOps(itemsOpsArray)
+      await validationScripts(item, actionPath, itemName);
+      await testScripts(item, response, request);
+    };
+    const itemsOpsArray = pm.collection.items.map(itemOps, undefined);
+    return itemGroupOps(itemsOpsArray);
   };
 
   generatePackages = async (): Promise<void> => {
@@ -315,88 +314,63 @@ export default class Generate {
       collection: pm.collection,
       update: this.update,
       generator: genInstance.generator,
-    })
-    let actionCount = 0
+    });
+    let actionCount = 0;
     pm.collection.forEachItemGroup(async (itemGroup: any) => {
       // iteratively update project.yml
-      const members = itemGroup.items.members
+      const { members } = itemGroup.items;
       if (
         members.length > 0 &&
         Object.prototype.hasOwnProperty.call(members[0], 'request')
       ) {
-        const groupName = sanitizeFileName(itemGroup.name)
+        const groupName = sanitizeFileName(itemGroup.name);
         this.projectGenerator.updateProjectYML(
           workDir,
-          `\n  - name: ${groupName}\n    actions:\n`,
-        )
+          `\n  - name: ${groupName}\n    actions:\n`
+        );
         itemGroup.forEachItem(async (item: any) => {
-          actionCount += 1
-          if (!isPublicApi(item.request.url.toString()))
+          actionCount += 1;
+          if (!isPublicApi(item.request.url.toString())) {
             this.projectGenerator.updateProjectYML(
               workDir,
-              `      - name: ${sanitizeFileName(item.name)}\n`,
-            )
-        })
+              `      - name: ${sanitizeFileName(item.name)}\n`
+            );
+          }
+        });
       }
-    })
+    });
 
     // write header and create package for root level actions, if there are any
     if (pm.collection.items.count() > actionCount) {
       this.projectGenerator.updateProjectYML(
         workDir,
-        `\n  - name: ${collectionName}\n    actions:\n`,
-      )
+        `\n  - name: ${collectionName}\n    actions:\n`
+      );
     }
   };
 
   generate = async (): Promise<void> => {
     try {
-      collectionId = this.id || ''
-      const tasks = new Listr([
-        {
-          title: 'Getting Collection',
-          task: () => this.validate(),
-        },
-        {
-          title: 'Generating Packages',
-          task: () => this.generatePackages(),
-        },
-        {
-          title: 'Generating Actions',
-          task: () => this.generateActions(),
-        },
-        {
-          title: 'Writing Updated Collection',
-          task: () =>
-            saveCollection(
-              join(workDir, `${collectionName}.postman_collection.json`),
-              pm.collection,
-            ),
-        },
-        {
-          title: 'Syncing Updated Collection to Postman Cloud',
-          skip: () => {
-            if (this.key && this.updateSource) {
-              return false
-            }
-            return true
-          },
-          task: () =>
-            new PostmanSyncer(this.key || '').updateCollection(
-              collectionId,
-              pm,
-            ),
-        },
-      ])
+      collectionId = this.id || '';
+      await this.validate();
+      await this.generatePackages();
+      await this.generateActions();
+      await saveCollection(
+        join(workDir, `${collectionName}.postman_collection.json`),
+        pm.collection
+      );
 
-      tasks.run().catch((error: any) => {
-        logger.error(error)
-      })
+      if (this.key && this.updateSource) {
+        await new PostmanSyncer(this.key || '').updateCollection(
+          collectionId,
+          pm
+        );
+      }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       console.log(
-        "Couldn't complete the process, some error occurred. Please try again!",
-      )
+        "Couldn't complete the process, some error occurred. Please try again!"
+      );
     }
   };
 }
@@ -412,4 +386,5 @@ export interface InvokerOptions {
   clientCode: boolean;
   update: boolean;
   init: boolean;
+  targetNamespace: string;
 }

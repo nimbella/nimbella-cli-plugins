@@ -11,78 +11,79 @@
  * governing permissions and limitations under the License.
  */
 
-import {sync} from 'mkdirp'
-import * as rimraf from 'rimraf'
-import * as ncp from 'ncp'
-import {existsSync, writeFileSync, appendFileSync} from 'fs'
-import {join} from 'path'
-import {Collection} from 'postman-collection'
-import {blue} from 'chalk'
-import {getReadMe} from './stub/common-gen'
-import BaseGenerator from './stub/base-gen'
-import logger from '../logger'
-import {writeEnvFile, writeReadMe} from '../writer'
-import {getEnvVars} from './test/test-gen'
+import { sync } from 'mkdirp';
+import * as rimraf from 'rimraf';
+import * as ncp from 'ncp';
+import { existsSync, writeFileSync, appendFileSync } from 'fs';
+import { join } from 'path';
+import { Collection } from 'postman-collection';
+import { blue } from 'chalk';
+import { getReadMe } from './stub/common-gen';
+import BaseGenerator from './stub/base-gen';
+import logger from '../logger';
+import { writeEnvFile, writeReadMe } from '../writer';
+import { getEnvVars } from './test/test-gen';
+
 export default class ProjectGenerator {
   currentNamespace: string | undefined;
 
   async createDir(base: string, dir: string, verbose = true): Promise<void> {
-    const loc = join(base, dir)
+    const loc = join(base, dir);
     try {
-      sync(loc)
-      if (verbose) console.log(`${blue('created :')}  ${loc}`)
+      sync(loc);
+      if (verbose) console.log(`${blue('created :')}  ${loc}`);
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't create directory : ${loc}`)
+      logger.error(error);
+      console.log(`Couldn't create directory : ${loc}`);
     }
   }
 
   createProjectYML(base: string): void {
     try {
-      writeFileSync(`${base}/project.yml`, 'packages:')
+      writeFileSync(`${base}/project.yml`, 'packages:');
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't create project.yml at ${base}`)
+      logger.error(error);
+      console.log(`Couldn't create project.yml at ${base}`);
     }
   }
 
   updateProjectYML(base: string, content: string): void {
     try {
-      appendFileSync(`${base}/project.yml`, content)
+      appendFileSync(`${base}/project.yml`, content);
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't update project.yml at ${base}`)
+      logger.error(error);
+      console.log(`Couldn't update project.yml at ${base}`);
     }
   }
 
   generateSkeleton(opts: ProjectSkeletonOptions): string {
-    const workDir = join(opts.base, opts.dir)
+    const workDir = join(opts.base, opts.dir);
     if (!opts.update) {
       if (existsSync(workDir)) {
-        rimraf.sync(workDir)
+        rimraf.sync(workDir);
       }
-      this.createDir(opts.base, opts.dir)
-      this.createDir(workDir, 'packages')
-      const templatePath = join(__dirname, 'stub', 'templates', 'common')
+      this.createDir(opts.base, opts.dir);
+      this.createDir(workDir, 'packages');
+      const templatePath = join(__dirname, 'stub', 'templates', 'common');
       ncp.ncp(templatePath, workDir, err => {
         if (err) {
-          logger.error(err)
-          console.log("Couldn't copy the   content")
+          logger.error(err);
+          console.log("Couldn't copy the   content");
         }
-      })
+      });
     }
-    this.createProjectYML(workDir)
+    this.createProjectYML(workDir);
     opts.generator
-    .getSupportingItems(opts.collection)
-    .forEach((item: { location: string; content: string }) => {
-      writeFileSync(join(workDir, item.location), item.content)
-    })
+      .getSupportingItems(opts.collection)
+      .forEach((item: { location: string; content: string }) => {
+        writeFileSync(join(workDir, item.location), item.content);
+      });
     writeReadMe(
       workDir,
-      getReadMe(((opts.collection as any).description || '').content),
-    )
-    writeEnvFile(workDir, getEnvVars(opts.collection, undefined))
-    return workDir
+      getReadMe(((opts.collection as any).description || '').content)
+    );
+    writeEnvFile(workDir, getEnvVars(opts.collection, undefined));
+    return workDir;
   }
 }
 export interface RouteOptions {

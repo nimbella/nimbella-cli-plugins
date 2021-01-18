@@ -11,7 +11,8 @@
  * governing permissions and limitations under the License.
  */
 
-import BaseGenerator from './base-gen'
+import { HeaderList } from 'postman-collection';
+import BaseGenerator from './base-gen';
 import {
   sanitizeName,
   escapeSpecialChars,
@@ -20,30 +21,30 @@ import {
   sanitizeVarName,
   isJson,
   TestStubParams,
-} from '../../utils'
-import {HeaderList} from 'postman-collection'
-const TEST_STUB_RES_BODY_MAX_LEN = 300
+} from '../../utils';
+
+const TEST_STUB_RES_BODY_MAX_LEN = 300;
 export default class PyGenerator extends BaseGenerator {
   constructor() {
-    super('py')
+    super('py');
   }
 
   public getMethodStub(item: any): string {
     const path =
-      item.request.url && item.request.url.path ?
-        item.request.url.path.join('/') :
-        ''
-    const namespace = sanitizeName(item.name, '')
-    let [response] = item.responses.members
+      item.request.url && item.request.url.path
+        ? item.request.url.path.join('/')
+        : '';
+    const namespace = sanitizeName(item.name, '');
+    let [response] = item.responses.members;
     if (!response) {
-      response = ''
+      response = '';
     }
-    const code = response.code || 200
-    const headers = (response.headers || '').members
-    const cookies = (response.cookies || '').members
-    const {status} = response
-    const body = escapeSpecialChars(JSON.stringify(response.body || ''))
-    const description = (item.request.description || '').content
+    const code = response.code || 200;
+    const headers = (response.headers || '').members;
+    const cookies = (response.cookies || '').members;
+    const { status } = response;
+    const body = escapeSpecialChars(JSON.stringify(response.body || ''));
+    const description = (item.request.description || '').content;
     const params: MethodStubParams = {
       path,
       headers,
@@ -53,42 +54,42 @@ export default class PyGenerator extends BaseGenerator {
       body,
       description,
       namespace,
-    }
+    };
     return this.tmplMethod({
       ...params,
-    })
+    });
   }
 
   public async getTestStub(item: any): Promise<string> {
-    let [response] = item.responses.members
+    let [response] = item.responses.members;
     if (!response) {
-      response = ''
+      response = '';
     }
-    const packageName = sanitizeFileName(item.parent().name)
-    const namespace = sanitizeName(item.name, '')
-    const testName = sanitizeVarName(item.name)
-    const methodName = sanitizeFileName(item.name)
-    const args = ''
-    const expected = ''
-    const got = ''
-    let body = response.body || ''
+    const packageName = sanitizeFileName(item.parent().name);
+    const namespace = sanitizeName(item.name, '');
+    const testName = sanitizeVarName(item.name);
+    const methodName = sanitizeFileName(item.name);
+    const args = '';
+    const expected = '';
+    const got = '';
+    let body = response.body || '';
     if (body.length > TEST_STUB_RES_BODY_MAX_LEN) {
-      body = undefined
+      body = undefined;
     } else {
-      body = JSON.stringify(body)
+      body = JSON.stringify(body);
     }
-    const testScripts: string[] = []
-    const isPostRequest: boolean = item.request.method.toLowerCase() === 'post'
-    const headers: HeaderList = response.headers ?
-      response.headers.members :
-      []
-    const responseTime = 500
-    const propTypes: Array<object> = []
-    const propChildKeys: Array<object> = []
-    const envVars: Array<string> = (item.variables || '').members
-    const mandatoryProps: Array<string> = isJson(response.body) ?
-      Object.keys(JSON.parse(response.body)) :
-      []
+    const testScripts: string[] = [];
+    const isPostRequest: boolean = item.request.method.toLowerCase() === 'post';
+    const headers: HeaderList = response.headers
+      ? response.headers.members
+      : [];
+    const responseTime = 500;
+    const propTypes: Array<object> = [];
+    const propChildKeys: Array<object> = [];
+    const envVars: Array<string> = (item.variables || '').members;
+    const mandatoryProps: Array<string> = isJson(response.body)
+      ? Object.keys(JSON.parse(response.body))
+      : [];
 
     const params: TestStubParams = {
       testName,
@@ -107,10 +108,10 @@ export default class PyGenerator extends BaseGenerator {
       envVars,
       mandatoryProps,
       namespace,
-    }
+    };
 
     return this.tmplTest({
       ...params,
-    })
+    });
   }
 }

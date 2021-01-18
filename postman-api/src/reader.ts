@@ -11,23 +11,23 @@
  * governing permissions and limitations under the License.
  */
 
-import {readFileSync} from 'fs'
-import {Collection} from 'postman-collection'
+import { readFileSync } from 'fs';
+import { Collection } from 'postman-collection';
 
 export type CollectionInfo = { isVersion2X: boolean; collection: Collection };
 
 export function read(fileLocation: string): CollectionInfo {
   try {
-    const collection = JSON.parse(readFileSync(fileLocation).toString())
+    const collection = JSON.parse(readFileSync(fileLocation).toString());
     return {
       isVersion2X: ((collection.info || '').schema || '').includes('v2'),
       collection: new Collection(collection),
-    }
+    };
   } catch (error) {
-    return {isVersion2X: false, collection: new Collection()}
+    return { isVersion2X: false, collection: new Collection() };
   }
 }
 
 export function isValid(collection: Collection): boolean {
-  return Collection.isCollection(collection)
+  return Collection.isCollection(collection);
 }

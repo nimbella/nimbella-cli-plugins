@@ -11,10 +11,10 @@
  * governing permissions and limitations under the License.
  */
 
-import BaseGenerator from './base-gen'
+import BaseGenerator from './base-gen';
 
 export default class GoGenerator extends BaseGenerator {
   constructor() {
-    super('go')
+    super('go');
   }
 }

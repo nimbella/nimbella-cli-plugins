@@ -1,8 +1,8 @@
 {
   "name": "@nimbella/postman-api",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "license": "Apache-2.0",
-  "description": "Postman Collection to Nimbella Project : Take your APIs seamlessly into Serverless world with this API",
+  "description": "Postman Collection to Nimbella Project: Take your APIs seamlessly into Serverless world with this API",
   "author": {
     "name": "nimbella",
     "email": "info@nimbella.com",
@@ -13,12 +13,10 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "acorn": "^7.2.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chalk": "^4.0.0",
-    "dotenv": "^8.2.0",
     "fuzzy": "^0.1.3",
     "handlebars": "^4.7.6",
-    "listr": "^0.14.3",
     "mkdirp": "1.0.4",
     "ncp": "^2.0.0",
     "postman-collection": "3.6.1",
@@ -27,15 +25,13 @@
     "retry-axios": "^2.2.0",
     "rimraf": "^3.0.2",
     "tslib": "^2.0.0",
+    "winston": "^3.2.1",
     "@types/postman-collection": "3.5.3",
-    "@types/swagger-schema-official": "2.0.15",
-    "winston": "^3.2.1"
+    "@types/swagger-schema-official": "2.0.15"
   },
   "devDependencies": {
     "@types/eslint-scope": "^3.7.0",
-    "@types/inquirer": "^6.5.0",
     "@types/jest": "^25.2.3",
-    "@types/listr": "^0.14.2",
     "@types/mkdirp": "^1.0.0",
     "@types/ncp": "^2.0.4",
     "@types/node": "^14.0.4",
@@ -45,8 +41,6 @@
     "cpx": "^1.5.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-config-oclif": "^3.1.0",
-    "eslint-config-oclif-typescript": "^0.2.0",
     "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.3",
     "jest": "^26.0.1",
@@ -62,7 +56,6 @@
   },
   "files": [
     "lib",
-    "oclif.manifest.json",
     ".env",
     ".npmrc",
     "package.json",
@@ -70,36 +63,20 @@
   ],
   "homepage": "https://github.com/nimbella/nimbella-cli-plugins",
   "keywords": [
-    "oclif-plugin",
     "postman-collection",
     "nimbella",
     "serverless",
     "convert",
-    "migrate",
-    "cli"
+    "migrate"
   ],
-  "oclif": {
-    "commands": "./lib/commands",
-    "bin": "postman",
-    "commandSeparator": " ",
-    "devPlugins": [
-      "@oclif/plugin-help"
-    ],
-    "scope": "nimbella",
-    "hooks": {
-      "init": []
-    }
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/nimbella/nimbella-cli-plugins",
-    "directory": "postman"
+    "directory": "postman-api"
   },
   "scripts": {
-    "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && cpx \"./src/generators/stub/templates/**/*\" ./lib/generators/stub/templates --clean && cpx \"./src/generators/test/templates/**\" ./lib/generators/test/templates --clean",
-    "version": "oclif-dev readme && git add README.md",
+    "prepack": "rm -rf lib && tsc -b  && cpx \"./src/generators/stub/templates/**/*\" ./lib/generators/stub/templates --clean && cpx \"./src/generators/test/templates/**\" ./lib/generators/test/templates --clean",
     "debug": "node --nolazy --inspect-brk=9229 src/index.ts",
     "test": "jest --forceExit --coverage --verbose",
     "start": "ts-node src/index.ts",

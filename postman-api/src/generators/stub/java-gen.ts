@@ -11,34 +11,34 @@
  * governing permissions and limitations under the License.
  */
 
-import BaseGenerator from './base-gen'
+import BaseGenerator from './base-gen';
 import {
   sanitizeName,
   escapeSpecialChars,
   MethodStubParams,
-} from '../../utils'
+} from '../../utils';
 
 export default class JavaGenerator extends BaseGenerator {
   constructor() {
-    super('java')
+    super('java');
   }
 
   public getMethodStub(item: any): string {
     const path =
-      item.request.url && item.request.url.path ?
-        item.request.url.path.join('/') :
-        ''
-    const namespace = sanitizeName(item.name, '')
-    let [response] = item.responses.members
+      item.request.url && item.request.url.path
+        ? item.request.url.path.join('/')
+        : '';
+    const namespace = sanitizeName(item.name, '');
+    let [response] = item.responses.members;
     if (!response) {
-      response = ''
+      response = '';
     }
-    const code = response.code || 200
-    const headers = (response.headers || '').members
-    const cookies = (response.cookies || '').members
-    const {status} = response
-    const body = escapeSpecialChars(JSON.stringify(response.body || ''))
-    const description = (item.request.description || '').content
+    const code = response.code || 200;
+    const headers = (response.headers || '').members;
+    const cookies = (response.cookies || '').members;
+    const { status } = response;
+    const body = escapeSpecialChars(JSON.stringify(response.body || ''));
+    const description = (item.request.description || '').content;
     const params: MethodStubParams = {
       path,
       headers,
@@ -48,9 +48,9 @@ export default class JavaGenerator extends BaseGenerator {
       body,
       description,
       namespace,
-    }
+    };
     return this.tmplMethod({
       ...params,
-    })
+    });
   }
 }

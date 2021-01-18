@@ -11,26 +11,26 @@
  * governing permissions and limitations under the License.
  */
 
-import {createLogger, format, transports} from 'winston'
+import { createLogger, format, transports } from 'winston';
 
 import path = require('path');
 
-const logCombined = path.join(__dirname, 'logs', 'errors.log')
-const logError = path.join(__dirname, 'logs', 'combined.log')
+const logCombined = path.join(__dirname, 'logs', 'errors.log');
+const logError = path.join(__dirname, 'logs', 'combined.log');
 const logger = createLogger({
   level: 'info',
   format: format.combine(
     format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss',
     }),
-    format.errors({stack: true}),
+    format.errors({ stack: true }),
     format.splat(),
-    format.json(),
+    format.json()
   ),
   transports: [
-    new transports.File({filename: logError, level: 'error'}),
-    new transports.File({filename: logCombined}),
+    new transports.File({ filename: logError, level: 'error' }),
+    new transports.File({ filename: logCombined }),
   ],
-})
+});
 
-export default logger
+export default logger;

@@ -11,13 +11,13 @@
  * governing permissions and limitations under the License.
  */
 
-import BaseGenerator from './base-gen'
+import BaseGenerator from './base-gen';
 
 export default class GeneratorInfo {
   constructor(variant: string, ext: string, generator: BaseGenerator) {
-    this.variant = variant
-    this.ext = ext
-    this.generator = generator
+    this.variant = variant;
+    this.ext = ext;
+    this.generator = generator;
   }
 
   public variant: string;

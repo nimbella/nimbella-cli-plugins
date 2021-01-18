@@ -11,28 +11,28 @@
  * governing permissions and limitations under the License.
  */
 
-import {join} from 'path'
-import {readFileSync} from 'fs'
+import { join } from 'path';
+import { readFileSync } from 'fs';
 import Handlebars = require('handlebars');
 
 const templateReadMeFile = readFileSync(
-  join(__dirname, '..', 'stub', 'templates', 'readme.hbs'),
-)
-const templateReadMe = Handlebars.compile(templateReadMeFile.toString())
+  join(__dirname, '..', 'stub', 'templates', 'readme.hbs')
+);
+const templateReadMe = Handlebars.compile(templateReadMeFile.toString());
 
 const templateCollectionDocFile = readFileSync(
-  join(__dirname, '..', 'stub', 'templates', 'collection.hbs'),
-)
+  join(__dirname, '..', 'stub', 'templates', 'collection.hbs')
+);
 const templateCollectionDoc = Handlebars.compile(
-  templateCollectionDocFile.toString(),
-)
+  templateCollectionDocFile.toString()
+);
 
 export function getReadMe(description: string): string {
   return templateReadMe({
     description,
-  })
+  });
 }
 
 export function getCollectionDoc(meta: object): string {
-  return templateCollectionDoc(meta)
+  return templateCollectionDoc(meta);
 }

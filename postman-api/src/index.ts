@@ -11,4 +11,4 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './invoker'
+export * from './invoker';

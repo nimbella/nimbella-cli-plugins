@@ -11,10 +11,10 @@
  * governing permissions and limitations under the License.
  */
 
-import axios from 'axios'
-import * as rax from 'retry-axios'
-import {green} from 'chalk'
-import logger from './logger'
+import axios from 'axios';
+import * as rax from 'retry-axios';
+import { green } from 'chalk';
+import logger from './logger';
 /*
 Postman’s bag is always heavy because it carries the life itself:
 It carries all the sorrows and all the joys, all the worries and all the hopes!
@@ -28,103 +28,103 @@ export default class PostmanSyncer {
   instance: any;
 
   constructor(apiKey: string) {
-    this.apiKey = apiKey
+    this.apiKey = apiKey;
     this.instance = axios.create({
       baseURL: this.baseUrl,
-      headers: {'X-Api-Key': this.apiKey, 'Content-Type': 'application/json'},
-    })
-    rax.attach(this.instance)
+      headers: { 'X-Api-Key': this.apiKey, 'Content-Type': 'application/json' },
+    });
+    rax.attach(this.instance);
   }
 
   createCollection = async (collectionData: string): Promise<string> => {
-    let output = ''
+    let output = '';
     try {
       output = await (
         await this.instance.post(`${this.baseUrl}collections`, collectionData)
-      ).data
+      ).data;
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't create collection at: ${this.baseUrl}`)
+      logger.error(error);
+      console.log(`Couldn't create collection at: ${this.baseUrl}`);
     }
-    return output
+    return output;
   };
 
   updateCollection = async (
     collectionId: string,
-    collectionData: object,
+    collectionData: object
   ): Promise<string> => {
-    let output: any
+    let output: any;
     try {
       output = await (
         await this.instance.put(
           `${this.baseUrl}collections/${collectionId}`,
-          collectionData,
+          collectionData
         )
-      ).data
+      ).data;
       console.log(
         `the updated collection ${green(
-          output.collection.name,
-        )} has been synced back to Postman`,
-      )
+          output.collection.name
+        )} has been synced back to Postman`
+      );
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't update collection at: ${this.baseUrl}`)
+      logger.error(error);
+      console.log(`Couldn't update collection at: ${this.baseUrl}`);
     }
-    return output
+    return output;
   };
 
   deleteCollection = async (collectionId: string): Promise<string> => {
-    let output = ''
+    let output = '';
     try {
       output = await (
         await this.instance.delete(`${this.baseUrl}collections/${collectionId}`)
-      ).data
+      ).data;
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't delete collection from: ${this.baseUrl}`)
+      logger.error(error);
+      console.log(`Couldn't delete collection from: ${this.baseUrl}`);
     }
-    return output
+    return output;
   };
 
   forkCollection = async (
     collectionId: string,
-    workspaceId: string,
+    workspaceId: string
   ): Promise<string> => {
-    let output = ''
+    let output = '';
     try {
       output = await (
         await this.instance.post(
-          `${this.baseUrl}collections/fork/${collectionId}?workspace=${workspaceId}`,
+          `${this.baseUrl}collections/fork/${collectionId}?workspace=${workspaceId}`
         )
-      ).data
+      ).data;
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't from collection from: ${this.baseUrl}`)
+      logger.error(error);
+      console.log(`Couldn't from collection from: ${this.baseUrl}`);
     }
-    return output
+    return output;
   };
 
   mergeCollection = async (
     sourceCollectionId: string,
-    destinationCollectionId: string,
+    destinationCollectionId: string
   ): Promise<string> => {
-    let output = ''
+    let output = '';
     const payload: object = {
       strategy: 'deleteSource',
       source: sourceCollectionId,
       destination: destinationCollectionId,
-    }
+    };
     try {
       output = await (
         await this.instance.post(
           `${this.baseUrl}collections/merge`,
-          JSON.stringify(payload),
+          JSON.stringify(payload)
         )
-      ).data
+      ).data;
     } catch (error) {
-      logger.error(error)
-      console.log(`Couldn't merge collection at: ${this.baseUrl}`)
+      logger.error(error);
+      console.log(`Couldn't merge collection at: ${this.baseUrl}`);
     }
-    return output
+    return output;
   };
 }

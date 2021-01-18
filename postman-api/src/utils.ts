@@ -11,28 +11,28 @@
  * governing permissions and limitations under the License.
  */
 
-import {HeaderList} from 'postman-collection'
-import {createHash} from 'crypto'
-import {readFileSync} from 'fs'
-import {urls} from './public-apis'
-import logger from './logger'
+import { HeaderList } from 'postman-collection';
+import { createHash } from 'crypto';
+import { readFileSync } from 'fs';
+import { urls } from './public-apis';
+import logger from './logger';
 
 export function sanitizeName(name: string, joiner: string) {
-  let newName = ''
+  let newName = '';
   newName = name
-  .replace(/[^a-zA-Z0-9]/g, joiner)
-  .replace(/-{2,}/g, joiner)
-  .toLowerCase()
-  if (joiner && newName.endsWith(joiner)) newName = newName.slice(0, -1)
-  return newName
+    .replace(/[^a-zA-Z0-9]/g, joiner)
+    .replace(/-{2,}/g, joiner)
+    .toLowerCase();
+  if (joiner && newName.endsWith(joiner)) newName = newName.slice(0, -1);
+  return newName;
 }
 
 export function sanitizeFileName(name: string): string {
-  return sanitizeName(name, '-')
+  return sanitizeName(name, '-');
 }
 
 export function sanitizeVarName(name: string): string {
-  return sanitizeName(name, '_')
+  return sanitizeName(name, '_');
 }
 
 export interface SupportingItem {
@@ -71,75 +71,75 @@ export type TestStubParams = {
 };
 
 export function isJson(item: any) {
-  item = typeof item === 'string' ? item : JSON.stringify(item)
+  item = typeof item === 'string' ? item : JSON.stringify(item);
 
   try {
-    item = JSON.parse(item)
+    item = JSON.parse(item);
   } catch (error) {
-    return false
+    return false;
   }
 
   if (typeof item === 'object' && item !== null) {
-    return true
+    return true;
   }
 
-  return false
+  return false;
 }
 
 export function isGuid(uid: string) {
   if (uid[0] === '{') {
-    uid = uid.substring(1, uid.length - 1)
+    uid = uid.substring(1, uid.length - 1);
   }
-  const regexGuid = /^(\{){0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\}){0,1}$/gi
-  return regexGuid.test(uid)
+  const regexGuid = /^(\{){0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\}){0,1}$/gi;
+  return regexGuid.test(uid);
 }
 
 export function escapeSpecialChars(data: string) {
   return data
-  .replace(/\\n/g, '\\n')
-  .replace(/\\'/g, "\\'")
-  .replace(/\\"/g, '\\"')
-  .replace(/\\&/g, '\\&')
-  .replace(/\\r/g, '\\r')
-  .replace(/\\t/g, '\\t')
-  .replace(/\\b/g, '\\b')
-  .replace(/\\f/g, '\\f')
+    .replace(/\\n/g, '\\n')
+    .replace(/\\'/g, "\\'")
+    .replace(/\\"/g, '\\"')
+    .replace(/\\&/g, '\\&')
+    .replace(/\\r/g, '\\r')
+    .replace(/\\t/g, '\\t')
+    .replace(/\\b/g, '\\b')
+    .replace(/\\f/g, '\\f');
 }
 
 export function stringChecksum(
   str: string,
   algorithm = 'md5',
-  encoding: any = 'hex',
+  encoding: any = 'hex'
 ) {
-  const length = str.length
-  const hash = createHash(algorithm).update(str, 'utf8').digest(encoding)
-  return {length, hash}
+  const { length } = str;
+  const hash = createHash(algorithm).update(str, 'utf8').digest(encoding);
+  return { length, hash };
 }
 
 export function fileChecksum(location: string) {
-  let data: any = ''
+  let data: any = '';
   try {
-    data = readFileSync(location)
+    data = readFileSync(location);
   } catch (error) {
-    logger.error(error)
+    logger.error(error);
   }
-  return exports.stringChecksum(data)
+  return exports.stringChecksum(data);
 }
 
 export function canBeUpdated(
   fileLocation: string,
-  generatedText: string,
+  generatedText: string
 ): boolean {
   try {
-    const fileText = fileChecksum(fileLocation)
-    const genText = stringChecksum(generatedText)
-    return fileText.length < genText.length
+    const fileText = fileChecksum(fileLocation);
+    const genText = stringChecksum(generatedText);
+    return fileText.length < genText.length;
   } catch (error) {
-    console.log(error)
-    return false
+    console.log(error);
+    return false;
   }
 }
 
 export function isPublicApi(url: string) {
-  return url in urls
+  return url in urls;
 }

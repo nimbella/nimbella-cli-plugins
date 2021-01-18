@@ -11,36 +11,36 @@
  * governing permissions and limitations under the License.
  */
 
-import init from './gen-factory'
-import GeneratorInfo from './gen-info'
-import {SupportingItem} from '../../utils'
+import init from './gen-factory';
+import GeneratorInfo from './gen-info';
+import { SupportingItem } from '../../utils';
 
-let genInstance: GeneratorInfo
+let genInstance: GeneratorInfo;
 
 export async function getMethodStub(item: any): Promise<string> {
-  return genInstance.generator.getMethodStub(item)
+  return genInstance.generator.getMethodStub(item);
 }
 
 export async function getTestStub(
   item: any,
-  location: string,
+  location: string
 ): Promise<string> {
-  return genInstance.generator.getTestStub(item, location)
+  return genInstance.generator.getTestStub(item, location);
 }
 
 export async function getGlobalValidationStub(item: any): Promise<string> {
-  return genInstance.generator.getGlobalValidationStub(item)
+  return genInstance.generator.getGlobalValidationStub(item);
 }
 
 export async function getMethodValidationStub(item: any): Promise<string> {
-  return genInstance.generator.getMethodValidationStub(item)
+  return genInstance.generator.getMethodValidationStub(item);
 }
 
 export async function getIncludeFile(item: any): Promise<SupportingItem> {
-  return genInstance.generator.getIncludeFile(item)
+  return genInstance.generator.getIncludeFile(item);
 }
 
 export function getInstance(language: string): GeneratorInfo {
-  genInstance = init(language)
-  return genInstance
+  genInstance = init(language);
+  return genInstance;
 }
