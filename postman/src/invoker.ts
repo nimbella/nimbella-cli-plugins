@@ -106,7 +106,7 @@ export default class Generate {
 
     langExt = genInstance.ext
     // if key is given, get collection from the Postman Cloud
-    if (this.key && !statSync(this.id).isFile()) {
+    if (this.key) {
       const fetcher = new PostmanFetcher(this.key)
       if (!isGuid(collectionId)) {
         const id = await fetcher.getCollectionGuid(collectionId)
