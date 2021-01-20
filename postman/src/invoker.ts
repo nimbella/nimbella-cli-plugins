@@ -419,7 +419,10 @@ export default class Generate {
           },
           task: async () => {
             const namespace = await this.projectGenerator.getCurrentNamespace()
-            this.projectGenerator.deployProject(join(process.cwd(), collectionName), namespace)
+            this.projectGenerator.deployProject(
+              join(process.cwd(), collectionName),
+              namespace,
+            )
           },
         },
       ])
