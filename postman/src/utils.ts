@@ -13,7 +13,7 @@
 
 import {HeaderList} from 'postman-collection'
 import {createHash, HexBase64Latin1Encoding} from 'crypto'
-import {readFileSync} from 'fs'
+import {readFileSync, statSync} from 'fs'
 import {urls} from './public-apis'
 import logger from './logger'
 
@@ -136,6 +136,14 @@ export function canBeUpdated(
     return fileText.length < genText.length
   } catch (error) {
     console.log(error)
+    return false
+  }
+}
+
+export function isFile(path: string) {
+  try {
+    return statSync(path).isFile()
+  } catch (error) {
     return false
   }
 }

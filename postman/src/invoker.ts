@@ -13,7 +13,7 @@
  * governing permissions and limitations under the License.
  */
 
-import {existsSync, statSync} from 'fs'
+import {existsSync} from 'fs'
 import {join} from 'path'
 import {blue, red, green} from 'chalk'
 import {ItemGroup} from 'postman-collection'
@@ -33,7 +33,7 @@ import {
   getMethodValidations,
   getGlobalValidations,
 } from './generators/test/test-gen'
-import {sanitizeFileName, isGuid, isPublicApi} from './utils'
+import {sanitizeFileName, isGuid, isFile, isPublicApi} from './utils'
 import PostmanFetcher from './fetcher'
 import PostmanSyncer from './syncer'
 import GeneratorInfo from './generators/stub/gen-info'
@@ -106,7 +106,7 @@ export default class Generate {
 
     langExt = genInstance.ext
     // if key is given, get collection from the Postman Cloud
-    if (this.key) {
+    if (this.key && !isFile(collectionId)) {
       const fetcher = new PostmanFetcher(this.key)
       if (!isGuid(collectionId)) {
         const id = await fetcher.getCollectionGuid(collectionId)
@@ -419,7 +419,7 @@ export default class Generate {
           },
           task: async () => {
             const namespace = await this.projectGenerator.getCurrentNamespace()
-            this.projectGenerator.deployProject(process.cwd(), namespace)
+            this.projectGenerator.deployProject(join(process.cwd(), collectionName), namespace)
           },
         },
       ])
