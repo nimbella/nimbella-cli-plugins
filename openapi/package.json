@@ -16,7 +16,7 @@
     "@apidevtools/swagger-parser": "^9.0.1",
     "@openapitools/openapi-generator-cli": "^1.0.13-4.3.1",
     "nimbella-deployer": "https://preview-apigcp.nimbella.io/nimbella-deployer-1.10.2.tgz",
-    "axios": "^0.19.2",
+    "axios": ">=0.21.1",
     "chalk": "^3.0.0",
     "dotenv": "^8.2.0",
     "fuzzy": "^0.1.3",

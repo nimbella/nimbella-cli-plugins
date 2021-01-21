@@ -16,7 +16,7 @@
     "@oclif/config": "^1.15.1",
     "@oclif/plugin-help": "^3.2.0",
     "acorn": "^7.2.0",
-    "axios": "^0.19.2",
+    "axios": ">=0.21.1",
     "chalk": "^4.0.0",
     "dotenv": "^8.2.0",
     "fuzzy": "^0.1.3",
