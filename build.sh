@@ -4,7 +4,7 @@ HELP_STR="usage: $0 -p [-b] [-v] [-d] [-h] [--plugin=<value>] [--build] [--versi
 
 
 # Sanity check for build param
-if [ -z ${1} ]; then
+if [ -z "${1}" ]; then
   echo "Please specify the plugin to build!"
   echo -en "${HELP_STR}"
   exit 3
@@ -16,9 +16,9 @@ while getopts "$optspec" optchar; do
         -)
             case "${OPTARG}" in
                 plugin)
-                    val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+                    val="${!OPTIND}"; OPTIND=$(( OPTIND + 1 ))
                     PLUGIN="${val}"
-                    cd ${PLUGIN}
+                    cd ${PLUGIN} || exit
                     ;;
                 build)
                     rm -rf node_modules
@@ -27,7 +27,7 @@ while getopts "$optspec" optchar; do
                     echo built
                     ;;
                 version)
-                    val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+                    val="${!OPTIND}"; OPTIND=$(( OPTIND + 1 ))
                     TAG="${val}"                    
                     npm --no-git-tag-version version ${TAG}
                     echo versioned ${TAG} ${PLUGIN}
@@ -39,7 +39,7 @@ while getopts "$optspec" optchar; do
                     echo published
                     ;;                    
                 help)
-                    val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+                    val="${!OPTIND}"; OPTIND=$(( OPTIND + 1 ))
                     ;;
                 *)
                     if [ "$OPTERR" = 1 ] && [ "${optspec:0:1}" != ":" ]; then
@@ -48,9 +48,9 @@ while getopts "$optspec" optchar; do
                     ;;
             esac;;
         p)
-                val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+                val="${!OPTIND}"; OPTIND=$(( OPTIND + 1 ))
                 PLUGIN="${val}"
-                cd ${PLUGIN}
+                cd ${PLUGIN} || exit
                 ;;
         b)
                 rm -rf node_modules
@@ -59,9 +59,9 @@ while getopts "$optspec" optchar; do
                 echo built
                 ;;
         v)
-                val="${!OPTIND}"; OPTIND=$(( $OPTIND + 1 ))
+                val="${!OPTIND}"; OPTIND=$(( OPTIND + 1 ))
                 TAG="${val}"                    
-                VERSION=`npm --no-git-tag-version version ${TAG}`
+                VERSION=$(npm --no-git-tag-version version ${TAG})
                 echo "versioned ${TAG} ${VERSION} for ${PLUGIN}"
                 ;;
         d)
